@@ -58,6 +58,66 @@ const i18n = {
     share: "แชร์",
     savedToast: "บันทึกคำทำนายตัวอย่างแล้ว",
     sharedToast: "เตรียมข้อความสำหรับแชร์แล้ว",
+    home: "หน้าแรก",
+    templesNav: "วัด",
+    myFortunes: "คำทำนายของฉัน",
+    profile: "โปรไฟล์",
+    searchTemple: "ค้นหาวัดหรือสิ่งศักดิ์สิทธิ์",
+    all: "ทั้งหมด",
+    finance: "การเงิน",
+    career: "การงาน",
+    love: "ความรัก",
+    health: "สุขภาพ",
+    luck: "โชคลาภ",
+    business: "ค้าขาย",
+    negotiation: "เจรจา",
+    protection: "แก้เคราะห์",
+    wealth: "มั่งคั่ง",
+    detail: "ดูรายละเอียด",
+    sacredFigure: "สิ่งศักดิ์สิทธิ์",
+    locationLabel: "สถานที่",
+    sourceInfo: "ข้อมูลอ้างอิง",
+    fortuneSet: "ชุดคำทำนาย",
+    drawHere: "เสี่ยงเซียมซีที่นี่",
+    available: "พร้อมใช้งาน",
+    pendingVerification: "รอตรวจสอบ",
+    referenceOnly: "อ้างอิงเท่านั้น",
+    draftContent: "เนื้อหาร่าง",
+    signIn: "เข้าสู่ระบบ",
+    register: "สมัครสมาชิก",
+    logout: "ออกจากระบบ",
+    authGateTitle: "สมัครสมาชิกเพื่อเสี่ยงเซียมซี",
+    authGateBody:
+      "คุณสามารถเลือกชมวัดต่าง ๆ ได้โดยไม่ต้องสมัครสมาชิก แต่การเสี่ยงเซียมซีและบันทึกคำทำนายจำเป็นต้องเข้าสู่ระบบ",
+    maybeLater: "ไว้ภายหลัง",
+    displayName: "ชื่อที่แสดง",
+    email: "อีเมล",
+    password: "รหัสผ่าน",
+    confirmPassword: "ยืนยันรหัสผ่าน",
+    rememberMe: "จดจำฉันไว้",
+    forgotPassword: "ลืมรหัสผ่าน",
+    acceptTerms: "ฉันยอมรับข้อกำหนดการใช้งานและนโยบายความเป็นส่วนตัว",
+    hasAccount: "มีบัญชีอยู่แล้ว? เข้าสู่ระบบ",
+    noAccount: "ยังไม่มีบัญชี? สมัครสมาชิก",
+    showPassword: "แสดง",
+    hidePassword: "ซ่อน",
+    authSuccess: "เข้าสู่ระบบสำเร็จ",
+    registerSuccess: "สมัครสมาชิกสำเร็จ",
+    loginFailed: "อีเมลหรือรหัสผ่านไม่ถูกต้อง",
+    emailExists: "อีเมลนี้มีบัญชีอยู่แล้ว",
+    passwordMismatch: "รหัสผ่านไม่ตรงกัน",
+    termsRequired: "กรุณายอมรับข้อกำหนดก่อนสมัครสมาชิก",
+    requiredFields: "กรุณากรอกข้อมูลให้ครบ",
+    sessionExpiredTitle: "กรุณาเข้าสู่ระบบอีกครั้ง",
+    sessionExpiredBody: "เซสชันของคุณหมดอายุแล้ว",
+    logoutTitle: "ต้องการออกจากระบบหรือไม่?",
+    cancel: "ยกเลิก",
+    accountReady: "บัญชีพร้อมใช้งาน",
+    emptyHistory: "ยังไม่มีคำทำนายที่บันทึก",
+    templeUnavailable: "วัดนี้ยังไม่พร้อมให้เสี่ยงเซียมซี",
+    fortuneUnavailable: "ยังไม่มีข้อมูลคำทำนายสำหรับวัดนี้",
+    networkUnavailable: "ไม่มีการเชื่อมต่อเครือข่าย",
+    loadingFortune: "กำลังโหลดคำทำนาย",
   },
   en: {
     appName: "Fortune",
@@ -118,13 +178,84 @@ const i18n = {
     share: "Share",
     savedToast: "Sample fortune saved",
     sharedToast: "Share text is ready",
+    home: "Home",
+    templesNav: "Temples",
+    myFortunes: "My Fortunes",
+    profile: "Profile",
+    searchTemple: "Search temples or sacred figures",
+    all: "All",
+    finance: "Finance",
+    career: "Career",
+    love: "Love",
+    health: "Health",
+    luck: "Luck",
+    business: "Business",
+    negotiation: "Negotiation",
+    protection: "Protection",
+    wealth: "Wealth",
+    detail: "Details",
+    sacredFigure: "Sacred Figure",
+    locationLabel: "Location",
+    sourceInfo: "Source",
+    fortuneSet: "Fortune Set",
+    drawHere: "Draw Fortune Here",
+    available: "Available",
+    pendingVerification: "Pending Verification",
+    referenceOnly: "Reference Only",
+    draftContent: "Draft Content",
+    signIn: "Sign In",
+    register: "Register",
+    logout: "Log Out",
+    authGateTitle: "Create an account to draw your fortune",
+    authGateBody: "You can explore temples without an account. Sign in to draw and save your fortunes.",
+    maybeLater: "Maybe Later",
+    displayName: "Display Name",
+    email: "Email",
+    password: "Password",
+    confirmPassword: "Confirm Password",
+    rememberMe: "Remember Me",
+    forgotPassword: "Forgot Password",
+    acceptTerms: "I accept the terms of use and privacy policy",
+    hasAccount: "Already have an account? Sign In",
+    noAccount: "No account yet? Register",
+    showPassword: "Show",
+    hidePassword: "Hide",
+    authSuccess: "Signed in successfully",
+    registerSuccess: "Account created",
+    loginFailed: "Incorrect email or password",
+    emailExists: "This email already exists",
+    passwordMismatch: "Passwords do not match",
+    termsRequired: "Please accept the terms before creating an account",
+    requiredFields: "Please fill in all required fields",
+    sessionExpiredTitle: "Please sign in again",
+    sessionExpiredBody: "Your session has expired",
+    logoutTitle: "Do you want to log out?",
+    cancel: "Cancel",
+    accountReady: "Account ready",
+    emptyHistory: "No saved fortunes yet",
+    templeUnavailable: "This temple is not ready for fortune drawing",
+    fortuneUnavailable: "Fortune data is unavailable for this temple",
+    networkUnavailable: "Network unavailable",
+    loadingFortune: "Loading fortune",
   },
 };
 
 const state = {
   lang: "th",
   screen: "welcome",
-  temple: "ai-khai",
+  temple: "ai_khai",
+  searchQuery: "",
+  activeCategory: "all",
+  user: null,
+  authSheet: false,
+  authRedirect: null,
+  authReason: "",
+  logoutConfirm: false,
+  authLoading: false,
+  formError: "",
+  formSuccess: "",
+  showPassword: false,
+  rememberMe: true,
   shakeState: "idle",
   motionEnabled: false,
   shakeScore: 0,
@@ -343,20 +474,478 @@ const fortuneReadings = {
   },
 };
 
+const categoryOrder = ["all", "finance", "career", "love", "health", "luck", "business", "negotiation"];
+
+const categoryLabels = {
+  all: { th: "ทั้งหมด", en: "All" },
+  finance: { th: "การเงิน", en: "Finance" },
+  career: { th: "การงาน", en: "Career" },
+  love: { th: "ความรัก", en: "Love" },
+  health: { th: "สุขภาพ", en: "Health" },
+  luck: { th: "โชคลาภ", en: "Luck" },
+  business: { th: "ค้าขาย", en: "Business" },
+  negotiation: { th: "เจรจา", en: "Negotiation" },
+  protection: { th: "แก้เคราะห์", en: "Protection" },
+  wealth: { th: "มั่งคั่ง", en: "Wealth" },
+};
+
+const templeLibrary = [
+  {
+    id: "ai_khai",
+    slug: "ai-khai-wat-chedi",
+    name: { th: "ไอ้ไข่ วัดเจดีย์", en: "Ai Khai, Wat Chedi", zh: null },
+    sacred_name: { th: "ไอ้ไข่ เด็กวัดเจดีย์", en: "Ai Khai", zh: null },
+    description: {
+      th: "วัดเจดีย์ จังหวัดนครศรีธรรมราช เป็นสถานที่ศรัทธาที่ผู้คนนิยมมากราบไหว้ ขอพร และทำบุญ โดยเฉพาะด้านการงาน การเงิน และโชคลาภ",
+      en: "Wat Chedi in Nakhon Si Thammarat is a devotional place where visitors pray, make merit, and ask for blessings around work, finance, and luck.",
+      zh: null,
+    },
+    province: { th: "นครศรีธรรมราช", en: "Nakhon Si Thammarat", zh: null },
+    location: "Sichon, Nakhon Si Thammarat, Thailand",
+    hero_image: "./assets/temple-photo.jpg",
+    thumbnail_image: "./assets/temple-photo.jpg",
+    categories: ["health", "finance", "career", "business", "negotiation"],
+    source_url: "https://thaimerit.com/e-fortune/4",
+    source_name: "Thai Merit",
+    source_reference: "Thai Merit e-fortune/4",
+    fortune_source_status: "reference_only",
+    content_status: "draft",
+    fortune_set_id: "ai_khai_v1",
+    is_active: true,
+    created_at: "2026-08-27",
+    updated_at: "2026-08-27",
+  },
+  {
+    id: "wat_bangchan",
+    slug: "wat-bangchan",
+    name: { th: "วัดราษฎร์ศรัทธาธรรม / วัดบางชัน", en: "Wat Ratsattha Tham / Wat Bang Chan", zh: null },
+    sacred_name: { th: "ท้าวเวสสุวรรณ", en: "Thao Wessuwan", zh: null },
+    description: {
+      th: "วัดบางชันเป็นสถานที่ที่ผู้คนนิยมมาขอพรท้าวเวสสุวรรณด้านการเงิน ความมั่นคง หน้าที่การงาน และความปลอดภัย",
+      en: "Wat Bang Chan is associated with prayers to Thao Wessuwan for finance, stability, career growth, and protection.",
+      zh: null,
+    },
+    province: { th: "กรุงเทพมหานคร", en: "Bangkok", zh: null },
+    location: "Khanna Yao, Bangkok, Thailand",
+    hero_image: "",
+    thumbnail_image: "",
+    categories: ["health", "finance", "career", "business", "negotiation"],
+    source_url: "https://www.thaimerit.com/e-fortune/8",
+    source_name: "Thai Merit",
+    source_reference: "Thai Merit e-fortune/8",
+    fortune_source_status: "reference_only",
+    content_status: "draft",
+    fortune_set_id: "bangchan_v1",
+    is_active: true,
+    created_at: "2026-08-27",
+    updated_at: "2026-08-27",
+  },
+  {
+    id: "wat_saman",
+    slug: "wat-saman-rattanaram",
+    name: { th: "วัดสมานรัตนาราม", en: "Wat Saman Rattanaram", zh: null },
+    sacred_name: { th: "พระพิฆเนศปางนอนเสวยสุข", en: "Reclining Ganesha", zh: null },
+    description: {
+      th: "วัดสมานรัตนารามเป็นที่ประดิษฐานพระพิฆเนศปางนอนเสวยสุข ซึ่งผู้คนนับถือด้านความรู้ ความสำเร็จ การงาน การเงิน และการขจัดอุปสรรค",
+      en: "Wat Saman Rattanaram is known for the reclining Ganesha, revered for wisdom, success, career, finance, and removing obstacles.",
+      zh: null,
+    },
+    province: { th: "ฉะเชิงเทรา", en: "Chachoengsao", zh: null },
+    location: "Chachoengsao, Thailand",
+    hero_image: "",
+    thumbnail_image: "",
+    categories: ["business", "negotiation", "finance", "career", "luck"],
+    source_url: "https://www.thaimerit.com/places/261",
+    source_name: "Thai Merit",
+    source_reference: "Thai Merit places/261",
+    fortune_source_status: "pending_verification",
+    content_status: "reference_only",
+    fortune_set_id: "saman_pending_v1",
+    is_active: false,
+    created_at: "2026-08-27",
+    updated_at: "2026-08-27",
+  },
+  {
+    id: "yi_kor_hong",
+    slug: "yi-kor-hong-shrine",
+    name: { th: "ศาลเจ้าพ่อยี่กอฮง", en: "Yi Kor Hong Shrine", zh: null },
+    sacred_name: { th: "เจ้าพ่อยี่กอฮง", en: "Chao Pho Yi Kor Hong", zh: null },
+    description: {
+      th: "ศาลเจ้าพ่อยี่กอฮงเป็นศาลที่ผู้คนศรัทธาด้านโชคลาภ การเงิน และการเสี่ยงดวง โดยมีประวัติผูกพันกับเยาวราชและการทำคุณประโยชน์ต่อสังคม",
+      en: "Yi Kor Hong Shrine is associated with fortune, finance, and luck, with a history connected to Yaowarat and public benefaction.",
+      zh: null,
+    },
+    province: { th: "กรุงเทพมหานคร", en: "Bangkok", zh: null },
+    location: "Yaowarat, Bangkok, Thailand",
+    hero_image: "",
+    thumbnail_image: "",
+    categories: ["finance", "luck"],
+    source_url: "https://thaimerit.com/e-fortune/15",
+    source_name: "Thai Merit",
+    source_reference: "Thai Merit e-fortune/15",
+    fortune_source_status: "reference_only",
+    content_status: "draft",
+    fortune_set_id: "yi_kor_hong_v1",
+    is_active: true,
+    created_at: "2026-08-27",
+    updated_at: "2026-08-27",
+  },
+  {
+    id: "wat_sra_manee",
+    slug: "wat-sra-manee",
+    name: { th: "วัดสระมณี", en: "Wat Sra Manee", zh: null },
+    sacred_name: { th: "พญานาค 4 ตระกูล", en: "Four Naga Lineages", zh: null },
+    description: {
+      th: "วัดสระมณีเป็นวัดในจังหวัดอุดรธานี มีความศรัทธาเกี่ยวกับพญานาค 4 ตระกูล และการขอพรด้านงาน โชคลาภ ค้าขาย และเจรจา",
+      en: "Wat Sra Manee in Udon Thani is associated with the four Naga lineages and blessings for career, luck, business, and negotiation.",
+      zh: null,
+    },
+    province: { th: "อุดรธานี", en: "Udon Thani", zh: null },
+    location: "Nong Han, Udon Thani, Thailand",
+    hero_image: "",
+    thumbnail_image: "",
+    categories: ["career", "luck", "business", "negotiation"],
+    source_url: "https://www.thaimerit.com/e-fortune/10",
+    source_name: "Thai Merit",
+    source_reference: "Thai Merit e-fortune/10",
+    fortune_source_status: "reference_only",
+    content_status: "draft",
+    fortune_set_id: "sra_manee_v1",
+    is_active: true,
+    created_at: "2026-08-27",
+    updated_at: "2026-08-27",
+  },
+  {
+    id: "wat_chulamanee",
+    slug: "wat-chulamanee",
+    name: { th: "วัดจุฬามณี", en: "Wat Chulamanee", zh: null },
+    sacred_name: { th: "ท้าวเวสสุวรรณ วัดจุฬามณี", en: "Thao Wessuwan at Wat Chulamanee", zh: null },
+    description: {
+      th: "วัดจุฬามณีเป็นสถานที่ศรัทธาท้าวเวสสุวรรณ ผู้คนมักขอพรเรื่องการเงิน การงาน โชคลาภ และค้าขาย",
+      en: "Wat Chulamanee is known for devotion to Thao Wessuwan, with prayers around finance, career, luck, and business.",
+      zh: null,
+    },
+    province: { th: "สมุทรสงคราม", en: "Samut Songkhram", zh: null },
+    location: "Samut Songkhram, Thailand",
+    hero_image: "",
+    thumbnail_image: "",
+    categories: ["finance", "career", "luck", "business"],
+    source_url: "https://thaimerit.com/e-fortune/21",
+    source_name: "Thai Merit",
+    source_reference: "Thai Merit e-fortune/21",
+    fortune_source_status: "reference_only",
+    content_status: "draft",
+    fortune_set_id: "chulamanee_v1",
+    is_active: true,
+    created_at: "2026-08-27",
+    updated_at: "2026-08-27",
+  },
+  {
+    id: "wat_rai_khing",
+    slug: "wat-rai-khing",
+    name: { th: "วัดไร่ขิง", en: "Wat Rai Khing", zh: null },
+    sacred_name: { th: "หลวงพ่อวัดไร่ขิง", en: "Luang Pho Wat Rai Khing", zh: null },
+    description: {
+      th: "หลวงพ่อวัดไร่ขิงเป็นที่ศรัทธาด้านความแคล้วคลาด เมตตา รักษาโรคภัย และพรตามความปรารถนา",
+      en: "Luang Pho Wat Rai Khing is revered for protection, compassion, healing, and blessings.",
+      zh: null,
+    },
+    province: { th: "นครปฐม", en: "Nakhon Pathom", zh: null },
+    location: "Sam Phran, Nakhon Pathom, Thailand",
+    hero_image: "",
+    thumbnail_image: "",
+    categories: ["finance", "luck"],
+    source_url: "https://www.thaimerit.com/e-fortune/20",
+    source_name: "Thai Merit",
+    source_reference: "Thai Merit e-fortune/20",
+    fortune_source_status: "reference_only",
+    content_status: "draft",
+    fortune_set_id: "rai_khing_v1",
+    is_active: true,
+    created_at: "2026-08-27",
+    updated_at: "2026-08-27",
+  },
+  {
+    id: "wat_tha_mai",
+    slug: "wat-tha-mai",
+    name: { th: "วัดท่าไม้", en: "Wat Tha Mai", zh: null },
+    sacred_name: { th: "หลวงปู่รุ่ง", en: "Luang Pu Rung", zh: null },
+    description: {
+      th: "วัดท่าไม้เป็นสถานที่ทำบุญและเสริมดวงที่ผู้คนเดินทางมาขอพรด้านสุขภาพ การเงิน การงาน โชคลาภ ค้าขาย และเจรจา",
+      en: "Wat Tha Mai is visited for merit-making and blessings around health, finance, career, luck, business, and negotiation.",
+      zh: null,
+    },
+    province: { th: "สมุทรสาคร", en: "Samut Sakhon", zh: null },
+    location: "Krathum Baen, Samut Sakhon, Thailand",
+    hero_image: "",
+    thumbnail_image: "",
+    categories: ["health", "finance", "career", "luck", "business", "negotiation"],
+    source_url: "https://www.thaimerit.com/e-fortune/12",
+    source_name: "Thai Merit",
+    source_reference: "Thai Merit e-fortune/12",
+    fortune_source_status: "reference_only",
+    content_status: "draft",
+    fortune_set_id: "tha_mai_v1",
+    is_active: true,
+    created_at: "2026-08-27",
+    updated_at: "2026-08-27",
+  },
+  {
+    id: "lim_ko_niao",
+    slug: "lim-ko-niao-shrine",
+    name: { th: "ศาลเจ้าแม่ลิ้มกอเหนี่ยว", en: "Lim Ko Niao Shrine", zh: null },
+    sacred_name: { th: "เจ้าแม่ลิ้มกอเหนี่ยว", en: "Chao Mae Lim Ko Niao", zh: null },
+    description: {
+      th: "ศาลเจ้าแม่ลิ้มกอเหนี่ยวเป็นสถานที่ศรัทธาด้านคุ้มครอง แก้เคราะห์ สุขภาพ ความรัก การเงิน การงาน และโชคลาภ",
+      en: "Lim Ko Niao Shrine is associated with protection, bad-luck correction, health, love, finance, career, and luck.",
+      zh: null,
+    },
+    province: { th: "ปัตตานี", en: "Pattani", zh: null },
+    location: "Pattani, Thailand",
+    hero_image: "",
+    thumbnail_image: "",
+    categories: ["protection", "health", "love", "finance", "career", "luck", "business", "negotiation"],
+    source_url: "https://thaimerit.com/e-fortune/6",
+    source_name: "Thai Merit",
+    source_reference: "Thai Merit e-fortune/6",
+    fortune_source_status: "reference_only",
+    content_status: "draft",
+    fortune_set_id: "lim_ko_niao_v1",
+    is_active: true,
+    created_at: "2026-08-27",
+    updated_at: "2026-08-27",
+  },
+  {
+    id: "wat_phra_that_doi_kham",
+    slug: "wat-phra-that-doi-kham",
+    name: { th: "วัดพระธาตุดอยคำ", en: "Wat Phra That Doi Kham", zh: null },
+    sacred_name: { th: "หลวงพ่อทันใจ", en: "Luang Pho Tan Jai", zh: null },
+    description: {
+      th: "วัดพระธาตุดอยคำเป็นสถานที่ศรัทธาหลวงพ่อทันใจ ผู้คนมักขอพรเรื่องความสำเร็จ การงาน การเงิน โชคลาภ และธุรกิจ",
+      en: "Wat Phra That Doi Kham is known for Luang Pho Tan Jai, often approached for success, career, finance, luck, and business.",
+      zh: null,
+    },
+    province: { th: "เชียงใหม่", en: "Chiang Mai", zh: null },
+    location: "Chiang Mai, Thailand",
+    hero_image: "",
+    thumbnail_image: "",
+    categories: ["finance", "career", "luck", "business"],
+    source_url: "https://thaimerit.com/e-fortune/19",
+    source_name: "Thai Merit",
+    source_reference: "Thai Merit e-fortune/19",
+    fortune_source_status: "reference_only",
+    content_status: "draft",
+    fortune_set_id: "doi_kham_v1",
+    is_active: true,
+    created_at: "2026-08-27",
+    updated_at: "2026-08-27",
+  },
+  {
+    id: "wat_weerachote",
+    slug: "wat-weerachote",
+    name: { th: "วัดวีระโชติธรรมาราม", en: "Wat Weerachote Thammaram", zh: null },
+    sacred_name: { th: "สิ่งศักดิ์สิทธิ์ประจำวัด", en: "Temple Sacred Figure", zh: null },
+    description: {
+      th: "วัดวีระโชติธรรมารามอยู่ในกลุ่มสถานที่ศรัทธาด้านการเงิน โชคลาภ ธุรกิจ และความมั่งคั่ง",
+      en: "Wat Weerachote Thammaram is grouped around finance, luck, business, and wealth blessings.",
+      zh: null,
+    },
+    province: { th: "ฉะเชิงเทรา", en: "Chachoengsao", zh: null },
+    location: "Chachoengsao, Thailand",
+    hero_image: "",
+    thumbnail_image: "",
+    categories: ["finance", "luck", "business", "wealth"],
+    source_url: "https://thaimerit.com/e-fortune/29",
+    source_name: "Thai Merit",
+    source_reference: "Thai Merit e-fortune/29",
+    fortune_source_status: "reference_only",
+    content_status: "draft",
+    fortune_set_id: "weerachote_v1",
+    is_active: true,
+    created_at: "2026-08-27",
+    updated_at: "2026-08-27",
+  },
+  {
+    id: "standing_ganesha",
+    slug: "standing-ganesha-park",
+    name: { th: "อุทยานพระพิฆเนศองค์ยืน", en: "Standing Ganesha Park", zh: null },
+    sacred_name: { th: "พระพิฆเนศองค์ยืน", en: "Standing Ganesha", zh: null },
+    description: {
+      th: "อุทยานพระพิฆเนศองค์ยืนเป็นสถานที่ศรัทธาด้านสุขภาพ การเงิน การงาน โชคลาภ และธุรกิจ",
+      en: "Standing Ganesha Park is associated with health, finance, career, luck, and business blessings.",
+      zh: null,
+    },
+    province: { th: "ฉะเชิงเทรา", en: "Chachoengsao", zh: null },
+    location: "Chachoengsao, Thailand",
+    hero_image: "",
+    thumbnail_image: "",
+    categories: ["health", "finance", "career", "luck", "business"],
+    source_url: "https://thaimerit.com/e-fortune/35",
+    source_name: "Thai Merit",
+    source_reference: "Thai Merit e-fortune/35",
+    fortune_source_status: "reference_only",
+    content_status: "draft",
+    fortune_set_id: "standing_ganesha_v1",
+    is_active: true,
+    created_at: "2026-08-27",
+    updated_at: "2026-08-27",
+  },
+];
+
+function createDraftFortunes(temple, theme) {
+  return Object.fromEntries(
+    Array.from({ length: 50 }, (_, index) => {
+      const number = index + 1;
+      const tone = number % 5;
+      const thTone = [
+        "ค่อยเป็นค่อยไปและต้องใช้สติ",
+        "มีคนช่วยเหลือเมื่อสื่อสารอย่างชัดเจน",
+        "มีจังหวะเปลี่ยนแปลงที่ควรเตรียมใจ",
+        "เด่นเรื่องโอกาสใหม่และการลงมือจริง",
+        "ต้องระวังความรีบและความเชื่อใจง่าย",
+      ][tone];
+      const enTone = [
+        "moves gradually and asks for mindfulness",
+        "brings support when communication is clear",
+        "signals change that needs preparation",
+        "favors new opportunity and real action",
+        "warns against haste and easy trust",
+      ][tone];
+
+      return [
+        number,
+        {
+          id: `${temple.fortune_set_id}_${number}`,
+          fortune_set_id: temple.fortune_set_id,
+          number,
+          original_text_th: null,
+          original_text_en: null,
+          original_text_zh: null,
+          interpretation_th: [
+            `ใบนี้ของ${temple.name.th} ${thTone} โดยให้ยึดศรัทธาและความรอบคอบเป็นหลัก`,
+            `การงานเกี่ยวกับ${theme.th}จะเดินหน้าเมื่อวางแผนและตรวจรายละเอียดก่อนตัดสินใจ`,
+            "การเงินควรแบ่งสำรองไว้ก่อน แล้วจึงค่อยขยับเรื่องลงทุนหรือค่าใช้จ่ายใหญ่",
+            "ความรักเหมาะกับการพูดตรงด้วยน้ำเสียงนุ่มนวล ลดการคาดเดาแทนกัน",
+            "สุขภาพควรรักษาสมดุลการพักผ่อน ลดความเครียด และอย่าฝืนร่างกายเกินไป",
+          ],
+          interpretation_en: [
+            `This fortune for ${temple.name.en} ${enTone}. Faith and careful judgment should lead the way.`,
+            `${theme.en} matters progress when plans and details are checked before decisions.`,
+            "Keep financial reserves first, then move carefully on investment or larger expenses.",
+            "Love benefits from direct but gentle conversation instead of guessing for each other.",
+            "Health improves with rest, lower stress, and not pushing the body too hard.",
+          ],
+          interpretation_zh: null,
+          category: theme.category,
+          source_url: temple.source_url,
+          source_reference: temple.source_reference,
+          review_status: "draft",
+          content_status: "draft",
+          created_at: "2026-08-27",
+          updated_at: "2026-08-27",
+        },
+      ];
+    })
+  );
+}
+
+function makeFortuneSet(templeId, fortunes, status = "draft") {
+  const temple = templeLibrary.find((item) => item.id === templeId);
+  return {
+    id: temple.fortune_set_id,
+    temple_id: temple.id,
+    name: `${temple.name.en} Fortune Set`,
+    total_fortunes: Object.keys(fortunes).length,
+    source_url: temple.source_url,
+    source_name: temple.source_name,
+    source_note: temple.source_reference,
+    version: "v1",
+    content_status: status,
+    last_verified_at: "2026-08-27",
+    fortunes,
+  };
+}
+
+function adaptAiKhaiFortunes() {
+  return Object.fromEntries(
+    Object.entries(fortuneReadings).map(([number, reading]) => [
+      number,
+      {
+        id: `ai_khai_v1_${number}`,
+        fortune_set_id: "ai_khai_v1",
+        number: Number(number),
+        original_text_th: null,
+        original_text_en: null,
+        original_text_zh: null,
+        interpretation_th: reading.th,
+        interpretation_en: reading.en,
+        interpretation_zh: null,
+        category: "fortune",
+        source_url: "https://thaimerit.com/e-fortune/4",
+        source_reference: "Thai Merit e-fortune/4",
+        review_status: "draft",
+        content_status: "draft",
+        created_at: "2026-08-27",
+        updated_at: "2026-08-27",
+      },
+    ])
+  );
+}
+
+const fortuneSets = {
+  ai_khai_v1: makeFortuneSet("ai_khai", adaptAiKhaiFortunes()),
+  bangchan_v1: makeFortuneSet("wat_bangchan", createDraftFortunes(templeLibrary.find((temple) => temple.id === "wat_bangchan"), { th: "การเงินและความมั่นคง", en: "finance and stability", category: "finance" })),
+  saman_pending_v1: makeFortuneSet("wat_saman", {}, "reference_only"),
+  yi_kor_hong_v1: makeFortuneSet("yi_kor_hong", createDraftFortunes(templeLibrary.find((temple) => temple.id === "yi_kor_hong"), { th: "โชคลาภและการเงิน", en: "luck and finance", category: "luck" })),
+  sra_manee_v1: makeFortuneSet("wat_sra_manee", createDraftFortunes(templeLibrary.find((temple) => temple.id === "wat_sra_manee"), { th: "การงาน ค้าขาย และเจรจา", en: "career, business, and negotiation", category: "career" })),
+  chulamanee_v1: makeFortuneSet("wat_chulamanee", createDraftFortunes(templeLibrary.find((temple) => temple.id === "wat_chulamanee"), { th: "การเงิน การงาน และโชคลาภ", en: "finance, career, and luck", category: "finance" })),
+  rai_khing_v1: makeFortuneSet("wat_rai_khing", createDraftFortunes(templeLibrary.find((temple) => temple.id === "wat_rai_khing"), { th: "โชคลาภและความแคล้วคลาด", en: "luck and protection", category: "luck" })),
+  tha_mai_v1: makeFortuneSet("wat_tha_mai", createDraftFortunes(templeLibrary.find((temple) => temple.id === "wat_tha_mai"), { th: "สุขภาพ การเงิน และงาน", en: "health, finance, and career", category: "health" })),
+  lim_ko_niao_v1: makeFortuneSet("lim_ko_niao", createDraftFortunes(templeLibrary.find((temple) => temple.id === "lim_ko_niao"), { th: "คุ้มครอง แก้เคราะห์ และโชคลาภ", en: "protection, correction, and luck", category: "protection" })),
+  doi_kham_v1: makeFortuneSet("wat_phra_that_doi_kham", createDraftFortunes(templeLibrary.find((temple) => temple.id === "wat_phra_that_doi_kham"), { th: "ความสำเร็จและโอกาสทันใจ", en: "success and timely opportunity", category: "luck" })),
+  weerachote_v1: makeFortuneSet("wat_weerachote", createDraftFortunes(templeLibrary.find((temple) => temple.id === "wat_weerachote"), { th: "ความมั่งคั่งและธุรกิจ", en: "wealth and business", category: "wealth" })),
+  standing_ganesha_v1: makeFortuneSet("standing_ganesha", createDraftFortunes(templeLibrary.find((temple) => temple.id === "standing_ganesha"), { th: "ความสำเร็จและการขจัดอุปสรรค", en: "success and removing obstacles", category: "career" })),
+};
+
 const app = document.querySelector("#app");
 
 function t(key) {
   return i18n[state.lang][key];
 }
 
+function localText(value) {
+  if (!value) return "";
+  return value[state.lang] || value.th || value.en || "";
+}
+
+function currentTemple() {
+  return templeLibrary.find((temple) => temple.id === state.temple) || templeLibrary[0];
+}
+
+function currentFortuneSet() {
+  return fortuneSets[currentTemple().fortune_set_id];
+}
+
+function secureRandomInt(min, max) {
+  const total = max - min + 1;
+  if (window.crypto?.getRandomValues) {
+    const values = new Uint32Array(1);
+    window.crypto.getRandomValues(values);
+    return min + (values[0] % total);
+  }
+  return Math.floor(Math.random() * total) + min;
+}
+
 function drawFortuneNumber(previousNumber = state.selectedNumber) {
-  const { min, max } = fortuneNumberRange;
+  const fortuneSet = currentFortuneSet();
+  const { min } = fortuneNumberRange;
+  const max = fortuneSet?.total_fortunes || fortuneNumberRange.max;
   const total = max - min + 1;
   if (total <= 1) return min;
 
   let next = previousNumber;
   while (next === previousNumber) {
-    next = Math.floor(Math.random() * total) + min;
+    next = secureRandomInt(min, max);
   }
   return next;
 }
@@ -366,14 +955,33 @@ function currentResultTitle() {
 }
 
 function currentFortuneReading() {
-  const reading = fortuneReadings[state.selectedNumber] || fortuneReadings[1];
-  const localized = reading[state.lang] || reading.th;
-  const [fortune, work, money, love, health] = localized;
-  return { fortune, work, money, love, health };
+  const fortuneRecord = currentFortuneSet()?.fortunes?.[state.selectedNumber];
+  const localized =
+    state.lang === "en"
+      ? fortuneRecord?.interpretation_en || fortuneRecord?.interpretation_th
+      : fortuneRecord?.interpretation_th || fortuneRecord?.interpretation_en;
+  if (!localized) {
+    return {
+      fortune: t("fortuneUnavailable"),
+      work: t("fortuneUnavailable"),
+      money: t("fortuneUnavailable"),
+      love: t("fortuneUnavailable"),
+      health: t("fortuneUnavailable"),
+    };
+  }
+  const [fortuneText, work, money, love, health] = localized;
+  return { fortune: fortuneText, work, money, love, health };
 }
 
 function setScreen(screen, direction = "forward") {
   clearTimer();
+  if (screen === "login" || screen === "register") {
+    state.authSheet = false;
+  }
+  state.authReason = "";
+  state.formError = "";
+  state.formSuccess = "";
+  state.logoutConfirm = false;
   state.screen = screen;
   state.transition = direction;
   if (screen === "shake") {
@@ -402,8 +1010,12 @@ function back() {
   const route = {
     temples: "welcome",
     intro: "temples",
+    login: "temples",
+    register: "temples",
+    history: "temples",
+    profile: "temples",
     permission: "temples",
-    shake: "permission",
+    shake: "intro",
     reveal: "shake",
     result: "reveal",
   };
@@ -415,6 +1027,10 @@ function render() {
     welcome: welcomeView,
     temples: templesView,
     intro: introView,
+    login: loginView,
+    register: registerView,
+    history: historyView,
+    profile: profileView,
     permission: permissionView,
     shake: shakeView,
     reveal: revealView,
@@ -428,6 +1044,12 @@ function render() {
   }
   state.transition = "none";
   bindEvents();
+}
+
+function screenShell(inner, options = {}) {
+  const bottom = options.bottomNav === false ? "" : bottomNav();
+  const auth = options.authStrip === false ? "" : accountStrip();
+  return `${auth}${inner}${bottom}${authSheet()}`;
 }
 
 function topbar({ backButton = false, title = "", subtitle = "", brand = false } = {}) {
@@ -455,10 +1077,137 @@ function languageSelector() {
   `;
 }
 
+function escapeHtml(value) {
+  return String(value ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
+function categoryLabel(category) {
+  return categoryLabels[category]?.[state.lang] || categoryLabels[category]?.th || category;
+}
+
+function categoryChip(category) {
+  return `<button class="filter-chip ${state.activeCategory === category ? "active" : ""}" data-category="${category}">${categoryLabel(category)}</button>`;
+}
+
+function categoryTag(category) {
+  return `<span class="category-tag">${categoryLabel(category)}</span>`;
+}
+
+function statusText(status) {
+  const map = {
+    reference_only: t("referenceOnly"),
+    draft: t("draftContent"),
+    pending_verification: t("pendingVerification"),
+    verified: "Verified",
+    licensed: "Licensed",
+    published: "Published",
+  };
+  return map[status] || status;
+}
+
+function templeStatusLabel(temple) {
+  if (!temple.is_active || temple.fortune_source_status === "pending_verification") return t("pendingVerification");
+  return t("available");
+}
+
+function filteredTemples() {
+  const query = state.searchQuery.trim().toLowerCase();
+  return templeLibrary.filter((temple) => {
+    const matchesCategory = state.activeCategory === "all" || temple.categories.includes(state.activeCategory);
+    const haystack = [
+      localText(temple.name),
+      temple.name.th,
+      temple.name.en,
+      localText(temple.sacred_name),
+      temple.sacred_name.th,
+      temple.sacred_name.en,
+      localText(temple.province),
+      temple.province.th,
+      temple.province.en,
+      temple.location,
+      temple.categories.map(categoryLabel).join(" "),
+      temple.categories.map((category) => categoryLabels[category]?.th).join(" "),
+      temple.categories.map((category) => categoryLabels[category]?.en).join(" "),
+      temple.categories.join(" "),
+    ]
+      .join(" ")
+      .toLowerCase();
+    return matchesCategory && (!query || haystack.includes(query));
+  });
+}
+
+function accountStrip() {
+  if (state.user) {
+    return `
+      <div class="account-strip">
+        <button class="account-chip" data-screen="profile">${accountIcon()} ${escapeHtml(state.user.display_name)}</button>
+        <button class="text-mini" data-action="logout-confirm">${t("logout")}</button>
+      </div>
+    `;
+  }
+  return `
+    <div class="account-strip">
+      <button class="text-mini" data-screen="login">${t("signIn")}</button>
+      <button class="account-chip" data-screen="register">${t("register")}</button>
+    </div>
+  `;
+}
+
+function bottomNav() {
+  const item = (screen, label, icon, action = "") =>
+    `<button class="${state.screen === screen ? "active" : ""}" ${action ? `data-action="${action}"` : `data-screen="${screen}"`}>${icon}<span>${label}</span></button>`;
+  return `
+    <nav class="bottom-nav" aria-label="Mobile navigation">
+      ${item("welcome", t("home"), homeIcon())}
+      ${item("temples", t("templesNav"), templeIcon())}
+      ${item("history", t("myFortunes"), saveIcon(), "open-history")}
+      ${item("profile", t("profile"), accountIcon(), "open-profile")}
+    </nav>
+  `;
+}
+
+function authSheet() {
+  if (state.logoutConfirm) {
+    return `
+      <div class="sheet-backdrop">
+        <section class="bottom-sheet" role="dialog" aria-modal="true" aria-label="${t("logoutTitle")}" data-sheet>
+          <h2>${t("logoutTitle")}</h2>
+          <div class="button-stack compact">
+            <button class="primary" data-action="logout">${t("logout")}</button>
+            <button class="secondary" data-action="cancel-logout">${t("cancel")}</button>
+          </div>
+        </section>
+      </div>
+    `;
+  }
+  if (!state.authSheet) return "";
+  const title = state.authReason === "session_expired" ? t("sessionExpiredTitle") : t("authGateTitle");
+  const body = state.authReason === "session_expired" ? t("sessionExpiredBody") : t("authGateBody");
+  return `
+    <div class="sheet-backdrop" data-action="close-auth-sheet">
+      <section class="bottom-sheet" role="dialog" aria-modal="true" aria-label="${title}" data-sheet>
+        <h2>${title}</h2>
+        <p>${body}</p>
+        <div class="button-stack compact">
+          <button class="primary" data-screen="register">${t("register")}</button>
+          <button class="secondary" data-screen="login">${t("signIn")}</button>
+          <button class="text-action" data-action="close-auth-sheet">${t("maybeLater")}</button>
+        </div>
+      </section>
+    </div>
+  `;
+}
+
 function welcomeView() {
   return `
-    <section class="screen">
+    <section class="screen has-bottom-nav">
       ${topbar({ brand: true })}
+      ${accountStrip()}
       <div class="content welcome-content">
         <div class="nfc-pill">${cardIcon()} ${t("nfc")}</div>
         <div class="hero-container">${fortuneContainerSvg("hero")}</div>
@@ -471,62 +1220,202 @@ function welcomeView() {
           <button class="primary" data-screen="temples">${t("begin")}</button>
         </div>
       </div>
+      ${bottomNav()}
+      ${authSheet()}
     </section>
   `;
 }
 
 function templesView() {
+  const temples = filteredTemples();
+
   return `
-    <section class="screen scrollable">
+    <section class="screen scrollable has-bottom-nav">
       ${topbar({ backButton: true })}
+      ${accountStrip()}
       <div class="section-head">
         <h1>${t("chooseTemple")}</h1>
         <p>${t("chooseTempleLead")}</p>
       </div>
-      <div class="temple-list">
-        ${templeCard()}
+      <label class="search-box">
+        ${searchIcon()}
+        <input type="search" value="${escapeHtml(state.searchQuery)}" placeholder="${t("searchTemple")}" data-action="search-temple" />
+      </label>
+      <div class="filter-strip">
+        ${categoryOrder.map((category) => categoryChip(category)).join("")}
       </div>
+      <div class="temple-list">
+        ${temples.map((temple) => templeCard(temple)).join("")}
+      </div>
+      ${bottomNav()}
+      ${authSheet()}
     </section>
   `;
 }
 
-function templeCard() {
+function templeCard(temple) {
   return `
-    <article class="temple-card">
-      <div class="temple-image">${templePhotoMarkup()}</div>
+    <article class="temple-card ${temple.is_active ? "" : "disabled"}">
+      <div class="temple-image">${templePhotoMarkup(temple)}</div>
       <div class="temple-body">
-        <div class="status"><span class="status-dot"></span>${t("templeReady")}</div>
-        <h2>${t("templeName")}</h2>
-        <p class="location">${t("templeLocation")}</p>
-        <p>${t("templeDescription")}</p>
-        <button class="primary" data-screen="permission">${templeIcon()} ${t("selectTemple")}</button>
+        <div class="status"><span class="status-dot"></span>${templeStatusLabel(temple)}</div>
+        <h2>${localText(temple.name)}</h2>
+        <p class="sacred">${localText(temple.sacred_name)}</p>
+        <p class="location">${localText(temple.province)}</p>
+        <div class="tag-row">${temple.categories.slice(0, 4).map((category) => categoryTag(category)).join("")}</div>
+        <button class="secondary" data-temple="${temple.id}">${templeIcon()} ${t("detail")}</button>
       </div>
     </article>
   `;
 }
 
 function introView() {
+  const temple = currentTemple();
+  const fortuneSet = currentFortuneSet();
+
   return `
-    <section class="screen scrollable">
+    <section class="screen scrollable has-bottom-nav">
       ${topbar({ backButton: true })}
+      ${accountStrip()}
       <div class="section-head">
-        <h1>${t("introTitle")}</h1>
-        <p>${t("aboutTemple")}</p>
+        <h1>${localText(temple.name)}</h1>
+        <p>${localText(temple.description)}</p>
       </div>
-      <div class="temple-image intro-image">${templePhotoMarkup()}</div>
+      <div class="temple-image intro-image">${templePhotoMarkup(temple)}</div>
       <section class="info-panel">
-        <h2>${t("aboutFortuneTitle")}</h2>
-        <p>${t("aboutFortune")}</p>
+        <h2>${t("sacredFigure")}</h2>
+        <p>${localText(temple.sacred_name)}</p>
+        <div class="detail-grid">
+          <span>${t("locationLabel")}</span>
+          <strong>${temple.location}</strong>
+          <span>${t("fortuneSet")}</span>
+          <strong>${temple.fortune_set_id}</strong>
+          <span>${t("sourceInfo")}</span>
+          <a href="${temple.source_url}" target="_blank" rel="noreferrer">${temple.source_name}</a>
+        </div>
+        <div class="tag-row">${temple.categories.map((category) => categoryTag(category)).join("")}</div>
+        <p class="source-meta">${fortuneSet?.source_note || temple.source_reference} · ${statusText(temple.content_status)}</p>
       </section>
       <div class="button-stack">
-        <button class="primary" data-screen="permission">${t("startFortune")}</button>
+        <button class="primary" data-action="draw-fortune">${t("drawHere")}</button>
         <button class="secondary" data-screen="temples">${t("otherTemple")}</button>
       </div>
+      ${bottomNav()}
+      ${authSheet()}
+    </section>
+  `;
+}
+
+function authMessage() {
+  if (state.formError) return `<div class="form-message error">${state.formError}</div>`;
+  if (state.formSuccess) return `<div class="form-message success">${state.formSuccess}</div>`;
+  return "";
+}
+
+function passwordType() {
+  return state.showPassword ? "text" : "password";
+}
+
+function registerView() {
+  return `
+    <section class="screen scrollable auth-screen">
+      ${topbar({ backButton: true, title: t("register") })}
+      <form class="auth-card" data-register-form>
+        <h1>${t("register")}</h1>
+        ${authMessage()}
+        <label>${t("displayName")}<input name="display_name" autocomplete="name" /></label>
+        <label>${t("email")}<input name="email" type="email" autocomplete="email" /></label>
+        <label>${t("password")}<input name="password" type="${passwordType()}" autocomplete="new-password" /></label>
+        <label>${t("confirmPassword")}<input name="confirm_password" type="${passwordType()}" autocomplete="new-password" /></label>
+        <label class="check-row"><input name="terms" type="checkbox" /> <span>${t("acceptTerms")}</span></label>
+        <button class="text-action inline" type="button" data-action="toggle-password">${state.showPassword ? t("hidePassword") : t("showPassword")}</button>
+        <button class="primary" type="submit" ${state.authLoading ? "disabled" : ""}>${state.authLoading ? t("loadingFortune") : t("register")}</button>
+        <button class="text-action" type="button" data-screen="login">${t("hasAccount")}</button>
+      </form>
+    </section>
+  `;
+}
+
+function loginView() {
+  return `
+    <section class="screen scrollable auth-screen">
+      ${topbar({ backButton: true, title: t("signIn") })}
+      <form class="auth-card" data-login-form>
+        <h1>${t("signIn")}</h1>
+        ${authMessage()}
+        <label>${t("email")}<input name="email" type="email" autocomplete="email" /></label>
+        <label>${t("password")}<input name="password" type="${passwordType()}" autocomplete="current-password" /></label>
+        <div class="form-options">
+          <label class="check-row"><input data-action="remember-me" name="remember" type="checkbox" ${state.rememberMe ? "checked" : ""} /> <span>${t("rememberMe")}</span></label>
+          <button class="text-mini" type="button" data-action="forgot-password">${t("forgotPassword")}</button>
+        </div>
+        <button class="text-action inline" type="button" data-action="toggle-password">${state.showPassword ? t("hidePassword") : t("showPassword")}</button>
+        <button class="primary" type="submit" ${state.authLoading ? "disabled" : ""}>${state.authLoading ? t("loadingFortune") : t("signIn")}</button>
+        <button class="text-action" type="button" data-screen="register">${t("noAccount")}</button>
+      </form>
+    </section>
+  `;
+}
+
+function historyView() {
+  const items = getFortuneHistory().filter((item) => item.user_id === state.user?.id);
+  return `
+    <section class="screen scrollable has-bottom-nav">
+      ${topbar({ backButton: true, title: t("myFortunes") })}
+      ${accountStrip()}
+      <div class="history-list">
+        ${
+          items.length
+            ? items
+                .slice()
+                .reverse()
+                .map((item) => historyCard(item))
+                .join("")
+            : `<section class="info-panel empty-state"><p>${t("emptyHistory")}</p></section>`
+        }
+      </div>
+      ${bottomNav()}
+      ${authSheet()}
+    </section>
+  `;
+}
+
+function historyCard(item) {
+  const temple = templeLibrary.find((entry) => entry.id === item.temple_id);
+  return `
+    <article class="history-card">
+      <span>${new Date(item.drawn_at).toLocaleDateString(state.lang === "th" ? "th-TH" : "en-US")}</span>
+      <strong>${localText(temple?.name)} · ${item.fortune_number}</strong>
+      <p>${temple?.fortune_set_id || item.fortune_set_id}</p>
+    </article>
+  `;
+}
+
+function profileView() {
+  return `
+    <section class="screen scrollable has-bottom-nav">
+      ${topbar({ backButton: true, title: t("profile") })}
+      <section class="auth-card profile-card">
+        <div class="profile-avatar">${accountIcon()}</div>
+        <h1>${escapeHtml(state.user?.display_name || "")}</h1>
+        <p>${escapeHtml(state.user?.email || "")}</p>
+        <div class="detail-grid">
+          <span>${t("myFortunes")}</span>
+          <strong>${getFortuneHistory().filter((item) => item.user_id === state.user?.id).length}</strong>
+          <span>${t("accountReady")}</span>
+          <strong>${state.user ? t("available") : t("pendingVerification")}</strong>
+        </div>
+        <button class="secondary" data-action="logout-confirm">${t("logout")}</button>
+      </section>
+      ${bottomNav()}
+      ${authSheet()}
     </section>
   `;
 }
 
 function permissionView() {
+  const temple = currentTemple();
+
   return `
     <section class="screen">
       ${topbar({ backButton: true })}
@@ -534,7 +1423,7 @@ function permissionView() {
         <section class="permission-panel">
           <div class="permission-icon">${phoneIcon()}</div>
           <h1>${t("permissionTitle")}</h1>
-          <p>${t("permissionBody")}</p>
+          <p>${localText(temple.name)} · ${t("permissionBody")}</p>
           <div class="button-stack">
             <button class="primary" data-action="enable-motion">${phoneIcon()} ${t("enableMotion")}</button>
           </div>
@@ -545,6 +1434,7 @@ function permissionView() {
 }
 
 function shakeView() {
+  const temple = currentTemple();
   const modeClass = state.shakeState === "idle" ? "" : state.shakeState;
   const copy =
     state.shakeState === "idle"
@@ -559,7 +1449,7 @@ function shakeView() {
 
   return `
     <section class="screen shake-screen ${modeClass}" data-shake-screen>
-      ${topbar({ backButton: true, title: t("templeName"), subtitle: state.lang === "th" ? "เซียมซีดิจิทัล" : "Digital Fortune" })}
+      ${topbar({ backButton: true, title: localText(temple.name), subtitle: state.lang === "th" ? "เซียมซีดิจิทัล" : "Digital Fortune" })}
       <div class="content shake-stage">
         <div class="shake-copy">
           <h1>${copy.title}</h1>
@@ -601,14 +1491,16 @@ function revealView() {
 }
 
 function resultView() {
+  const temple = currentTemple();
+  const fortuneSet = currentFortuneSet();
   const reading = currentFortuneReading();
 
   return `
-    <section class="screen scrollable">
+    <section class="screen scrollable has-bottom-nav">
       ${topbar({ backButton: true })}
       <article class="fortune-paper">
         <header>
-          <p class="temple-mini">${t("templeName")} · ${t("sourceNote")}</p>
+          <p class="temple-mini">${localText(temple.name)} · ${fortuneSet?.source_note || t("sourceNote")}</p>
           <h1>${currentResultTitle()}</h1>
         </header>
         ${fortuneSection(t("fortuneHeading"), reading.fortune)}
@@ -625,6 +1517,8 @@ function resultView() {
         <button class="primary" data-screen="shake">${t("shakeAgain")}</button>
         <button class="secondary" data-screen="temples">${t("chooseAnother")}</button>
       </div>
+      ${bottomNav()}
+      ${authSheet()}
     </section>
   `;
 }
@@ -643,6 +1537,26 @@ function bindEvents() {
     button.addEventListener("click", () => setScreen(button.dataset.screen));
   });
 
+  document.querySelectorAll("[data-temple]").forEach((button) => {
+    button.addEventListener("click", () => {
+      state.temple = button.dataset.temple;
+      setScreen("intro");
+    });
+  });
+
+  document.querySelector("[data-action='search-temple']")?.addEventListener("input", (event) => {
+    state.searchQuery = event.target.value;
+    render();
+    document.querySelector("[data-action='search-temple']")?.focus();
+  });
+
+  document.querySelectorAll("[data-category]").forEach((button) => {
+    button.addEventListener("click", () => {
+      state.activeCategory = button.dataset.category;
+      render();
+    });
+  });
+
   document.querySelectorAll("[data-lang]").forEach((button) => {
     button.addEventListener("click", () => setLang(button.dataset.lang));
   });
@@ -652,8 +1566,343 @@ function bindEvents() {
   });
 
   document.querySelector("[data-action='enable-motion']")?.addEventListener("click", enableMotion);
-  document.querySelector("[data-action='save']")?.addEventListener("click", () => toast(t("savedToast")));
+  document.querySelector("[data-action='save']")?.addEventListener("click", saveCurrentFortune);
   document.querySelector("[data-action='share']")?.addEventListener("click", shareFortune);
+  document.querySelector("[data-action='draw-fortune']")?.addEventListener("click", requestDrawFortune);
+  document.querySelectorAll("[data-action='close-auth-sheet']").forEach((button) => {
+    button.addEventListener("click", closeAuthSheet);
+  });
+  document.querySelector("[data-sheet]")?.addEventListener("click", (event) => event.stopPropagation());
+  document.querySelector("[data-action='open-history']")?.addEventListener("click", openProtectedHistory);
+  document.querySelector("[data-action='open-profile']")?.addEventListener("click", openProtectedProfile);
+  document.querySelector("[data-action='logout-confirm']")?.addEventListener("click", confirmLogout);
+  document.querySelector("[data-action='logout']")?.addEventListener("click", logout);
+  document.querySelector("[data-action='cancel-logout']")?.addEventListener("click", () => {
+    state.logoutConfirm = false;
+    render();
+  });
+  document.querySelector("[data-action='toggle-password']")?.addEventListener("click", () => {
+    state.showPassword = !state.showPassword;
+    render();
+  });
+  document.querySelector("[data-action='forgot-password']")?.addEventListener("click", () => toast("Prototype"));
+  document.querySelector("[data-action='remember-me']")?.addEventListener("change", (event) => {
+    state.rememberMe = event.target.checked;
+  });
+  document.querySelector("[data-register-form]")?.addEventListener("submit", registerUser);
+  document.querySelector("[data-login-form]")?.addEventListener("submit", loginUser);
+}
+
+function requestDrawFortune() {
+  const temple = currentTemple();
+  const fortuneSet = currentFortuneSet();
+  if (!temple.is_active || temple.fortune_source_status === "pending_verification") {
+    toast(t("templeUnavailable"));
+    return;
+  }
+  if (!fortuneSet || !fortuneSet.total_fortunes) {
+    toast(t("fortuneUnavailable"));
+    return;
+  }
+  if (!state.user) {
+    state.authRedirect = "permission";
+    state.authReason = "";
+    state.authSheet = true;
+    render();
+    return;
+  }
+  setScreen("permission");
+}
+
+function closeAuthSheet() {
+  state.authSheet = false;
+  state.authReason = "";
+  render();
+}
+
+function openProtectedHistory() {
+  if (!state.user) {
+    state.authRedirect = "history";
+    state.authReason = "";
+    state.authSheet = true;
+    render();
+    return;
+  }
+  setScreen("history");
+}
+
+function openProtectedProfile() {
+  if (!state.user) {
+    state.authRedirect = "profile";
+    state.authReason = "";
+    state.authSheet = true;
+    render();
+    return;
+  }
+  setScreen("profile");
+}
+
+function confirmLogout() {
+  state.logoutConfirm = true;
+  render();
+}
+
+function logout() {
+  state.user = null;
+  state.logoutConfirm = false;
+  localStorage.removeItem("fortune_session");
+  toast(t("logout"));
+  setScreen("temples");
+}
+
+function getStoredUsers() {
+  try {
+    return JSON.parse(localStorage.getItem("fortune_users") || "[]");
+  } catch {
+    return [];
+  }
+}
+
+function storeUsers(users) {
+  localStorage.setItem("fortune_users", JSON.stringify(users));
+}
+
+function getFortuneHistory() {
+  try {
+    return JSON.parse(localStorage.getItem("fortune_history") || "[]");
+  } catch {
+    return [];
+  }
+}
+
+function storeFortuneHistory(history) {
+  localStorage.setItem("fortune_history", JSON.stringify(history));
+}
+
+function saveSession(user) {
+  const ttl = state.rememberMe ? 1000 * 60 * 60 * 24 * 30 : 1000 * 60 * 60 * 12;
+  localStorage.setItem(
+    "fortune_session",
+    JSON.stringify({
+      user_id: user.id,
+      expires_at: Date.now() + ttl,
+    })
+  );
+}
+
+function loadSession() {
+  try {
+    const session = JSON.parse(localStorage.getItem("fortune_session") || "null");
+    if (!session) return;
+    if (session.expires_at < Date.now()) {
+      localStorage.removeItem("fortune_session");
+      state.authReason = "session_expired";
+      state.authSheet = true;
+      return;
+    }
+    const user = getStoredUsers().find((item) => item.id === session.user_id);
+    if (user) {
+      state.user = {
+        id: user.id,
+        display_name: user.display_name,
+        email: user.email,
+        preferred_language: user.preferred_language,
+      };
+      state.lang = user.preferred_language || state.lang;
+      document.documentElement.lang = state.lang;
+    }
+  } catch {
+    localStorage.removeItem("fortune_session");
+  }
+}
+
+function randomId(prefix) {
+  const value = new Uint32Array(2);
+  if (window.crypto?.getRandomValues) {
+    window.crypto.getRandomValues(value);
+    return `${prefix}_${value[0].toString(16)}${value[1].toString(16)}`;
+  }
+  return `${prefix}_${Date.now().toString(36)}_${Math.random().toString(36).slice(2)}`;
+}
+
+function randomSalt() {
+  const value = new Uint8Array(16);
+  if (window.crypto?.getRandomValues) {
+    window.crypto.getRandomValues(value);
+    return Array.from(value, (byte) => byte.toString(16).padStart(2, "0")).join("");
+  }
+  return Math.random().toString(36).slice(2);
+}
+
+async function hashPassword(password, salt) {
+  const input = `${salt}:${password}`;
+  if (window.crypto?.subtle) {
+    const bytes = new TextEncoder().encode(input);
+    const digest = await window.crypto.subtle.digest("SHA-256", bytes);
+    return Array.from(new Uint8Array(digest), (byte) => byte.toString(16).padStart(2, "0")).join("");
+  }
+  return btoa(unescape(encodeURIComponent(input)));
+}
+
+async function registerUser(event) {
+  event.preventDefault();
+  if (state.authLoading) return;
+
+  const data = new FormData(event.currentTarget);
+  const displayName = String(data.get("display_name") || "").trim();
+  const email = String(data.get("email") || "").trim().toLowerCase();
+  const password = String(data.get("password") || "");
+  const confirmPassword = String(data.get("confirm_password") || "");
+  const terms = data.get("terms");
+
+  state.formError = "";
+  state.formSuccess = "";
+
+  if (!displayName || !email || !password || !confirmPassword) {
+    state.formError = t("requiredFields");
+    render();
+    return;
+  }
+  if (password !== confirmPassword) {
+    state.formError = t("passwordMismatch");
+    render();
+    return;
+  }
+  if (!terms) {
+    state.formError = t("termsRequired");
+    render();
+    return;
+  }
+
+  const users = getStoredUsers();
+  if (users.some((user) => user.email === email)) {
+    state.formError = t("emailExists");
+    render();
+    return;
+  }
+
+  state.authLoading = true;
+  render();
+
+  const now = new Date().toISOString();
+  const salt = randomSalt();
+  const user = {
+    id: randomId("user"),
+    display_name: displayName,
+    email,
+    password_hash: await hashPassword(password, salt),
+    password_salt: salt,
+    preferred_language: state.lang,
+    created_at: now,
+    updated_at: now,
+    last_login_at: now,
+  };
+
+  users.push(user);
+  storeUsers(users);
+  state.user = {
+    id: user.id,
+    display_name: user.display_name,
+    email: user.email,
+    preferred_language: user.preferred_language,
+  };
+  saveSession(user);
+  state.authLoading = false;
+  state.formSuccess = t("registerSuccess");
+  toast(t("registerSuccess"));
+  setScreen(state.authRedirect || "profile");
+  state.authRedirect = null;
+}
+
+async function loginUser(event) {
+  event.preventDefault();
+  if (state.authLoading) return;
+
+  const data = new FormData(event.currentTarget);
+  const email = String(data.get("email") || "").trim().toLowerCase();
+  const password = String(data.get("password") || "");
+
+  if (!email || !password) {
+    state.formError = t("requiredFields");
+    render();
+    return;
+  }
+
+  state.authLoading = true;
+  state.formError = "";
+  render();
+
+  const users = getStoredUsers();
+  const user = users.find((item) => item.email === email);
+  const passwordHash = user ? await hashPassword(password, user.password_salt) : "";
+
+  if (!user || passwordHash !== user.password_hash) {
+    state.authLoading = false;
+    state.formError = t("loginFailed");
+    render();
+    return;
+  }
+
+  user.last_login_at = new Date().toISOString();
+  user.preferred_language = state.lang;
+  user.updated_at = user.last_login_at;
+  storeUsers(users);
+
+  state.user = {
+    id: user.id,
+    display_name: user.display_name,
+    email: user.email,
+    preferred_language: user.preferred_language,
+  };
+  saveSession(user);
+  state.authLoading = false;
+  toast(t("authSuccess"));
+  setScreen(state.authRedirect || "temples");
+  state.authRedirect = null;
+}
+
+function saveDrawnFortune() {
+  if (!state.user || !state.selectedNumber) return;
+
+  const temple = currentTemple();
+  const fortuneSet = currentFortuneSet();
+  const fortune = fortuneSet?.fortunes?.[state.selectedNumber];
+  if (!fortune) return;
+
+  const history = getFortuneHistory();
+  history.push({
+    id: randomId("fortune"),
+    user_id: state.user.id,
+    temple_id: temple.id,
+    fortune_set_id: fortuneSet.id,
+    fortune_id: fortune.id,
+    fortune_number: state.selectedNumber,
+    drawn_at: new Date().toISOString(),
+    language: state.lang,
+  });
+  storeFortuneHistory(history);
+}
+
+function saveCurrentFortune() {
+  if (!state.user) {
+    state.authRedirect = "result";
+    state.authReason = "";
+    state.authSheet = true;
+    render();
+    return;
+  }
+  const history = getFortuneHistory();
+  const exists = history.some(
+    (item) =>
+      item.user_id === state.user.id &&
+      item.temple_id === state.temple &&
+      item.fortune_number === state.selectedNumber &&
+      Date.now() - new Date(item.drawn_at).getTime() < 1000 * 60 * 5
+  );
+  if (!exists) {
+    saveDrawnFortune();
+  }
+  toast(t("savedToast"));
 }
 
 async function enableMotion() {
@@ -739,6 +1988,7 @@ function updateShakeState() {
 
 function selectFortune() {
   state.selectedNumber = drawFortuneNumber();
+  saveDrawnFortune();
   state.shakeState = "drawing";
   render();
 
@@ -858,12 +2108,17 @@ function templeSceneSvg() {
   `;
 }
 
-function templePhotoMarkup() {
+function templePhotoMarkup(temple = currentTemple()) {
+  if (!temple.thumbnail_image && !temple.hero_image) {
+    return `<div class="temple-photo-fallback">${templeSceneSvg()}</div>`;
+  }
+
+  const image = temple.thumbnail_image || temple.hero_image;
   return `
     <img
       class="temple-photo"
-      src="./assets/temple-photo.jpg"
-      alt="${t("templeName")}"
+      src="${image}"
+      alt="${escapeHtml(localText(temple.name))}"
       onerror="this.nextElementSibling.hidden=false; this.remove()"
     />
     <div class="temple-photo-fallback" hidden>${templeSceneSvg()}</div>
@@ -886,6 +2141,18 @@ function templeIcon() {
   return `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 11h16L12 4 4 11Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M6 11v8M10 11v8M14 11v8M18 11v8M4 19h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>`;
 }
 
+function homeIcon() {
+  return `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5V21h-6v-6H9v6H3V10.5Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>`;
+}
+
+function searchIcon() {
+  return `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.8"/><path d="m16.5 16.5 4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>`;
+}
+
+function accountIcon() {
+  return `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="1.8"/><path d="M4.5 21a7.5 7.5 0 0 1 15 0" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>`;
+}
+
 function phoneIcon() {
   return `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="7" y="2.5" width="10" height="19" rx="2.6" stroke="currentColor" stroke-width="1.8"/><path d="M10.5 18.2h3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>`;
 }
@@ -898,4 +2165,5 @@ function shareIcon() {
   return `<svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M16 8l-8 4 8 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="18" cy="7" r="3" stroke="currentColor" stroke-width="1.8"/><circle cx="6" cy="12" r="3" stroke="currentColor" stroke-width="1.8"/><circle cx="18" cy="17" r="3" stroke="currentColor" stroke-width="1.8"/></svg>`;
 }
 
+loadSession();
 render();
