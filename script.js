@@ -135,10 +135,31 @@ const state = {
   transition: "none",
 };
 
+const fortuneNumberRange = {
+  min: 1,
+  max: 28,
+};
+
 const app = document.querySelector("#app");
 
 function t(key) {
   return i18n[state.lang][key];
+}
+
+function drawFortuneNumber(previousNumber = state.selectedNumber) {
+  const { min, max } = fortuneNumberRange;
+  const total = max - min + 1;
+  if (total <= 1) return min;
+
+  let next = previousNumber;
+  while (next === previousNumber) {
+    next = Math.floor(Math.random() * total) + min;
+  }
+  return next;
+}
+
+function currentResultTitle() {
+  return t("resultTitle").replace(/\d+/, state.selectedNumber);
 }
 
 function setScreen(screen, direction = "forward") {
@@ -376,7 +397,7 @@ function resultView() {
       <article class="fortune-paper">
         <header>
           <p class="temple-mini">${t("templeName")} · ${t("sourceNote")}</p>
-          <h1>${t("resultTitle")}</h1>
+          <h1>${currentResultTitle()}</h1>
         </header>
         ${fortuneSection(t("fortuneHeading"), t("fortuneText"))}
         ${fortuneSection(t("workHeading"), t("workText"))}
@@ -505,6 +526,7 @@ function updateShakeState() {
 }
 
 function selectFortune() {
+  state.selectedNumber = drawFortuneNumber();
   state.shakeState = "drawing";
   render();
 
@@ -520,10 +542,10 @@ function selectFortune() {
 }
 
 async function shareFortune() {
-  const text = `${t("resultTitle")} - ${t("fortuneText")}`;
+  const text = `${currentResultTitle()} - ${t("fortuneText")}`;
   if (navigator.share) {
     try {
-      await navigator.share({ title: t("resultTitle"), text });
+      await navigator.share({ title: currentResultTitle(), text });
       return;
     } catch {
       // Keep the prototype quiet if the share sheet is dismissed.
