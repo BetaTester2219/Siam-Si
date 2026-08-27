@@ -3,3 +3,10 @@ assets/candidate-images/
 assets/candidate-sheet.png
 .DS_Store
 Thumbs.db
+*.log
+*.tsbuildinfo
+node_modules/
+.next/
+.env
+.env.*
+!.env.example
