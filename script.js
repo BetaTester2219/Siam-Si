@@ -39,7 +39,7 @@ const i18n = {
     revealLabel: "เซียมซีหมายเลข",
     ready: "คำทำนายของคุณพร้อมแล้ว",
     revealFortune: "เปิดคำทำนาย",
-    resultTitle: "เซียมซีใบที่ 17",
+    resultTitle: "เซียมซีใบที่ {number}",
     sourceNote: "เนื้อหาตัวอย่าง",
     fortuneHeading: "คำทำนาย",
     fortuneText:
@@ -99,7 +99,7 @@ const i18n = {
     revealLabel: "Fortune No.",
     ready: "Your fortune is ready.",
     revealFortune: "Reveal Fortune",
-    resultTitle: "Fortune No. 17",
+    resultTitle: "Fortune No. {number}",
     sourceNote: "Sample content",
     fortuneHeading: "Fortune",
     fortuneText:
@@ -130,7 +130,7 @@ const state = {
   shakeScore: 0,
   lastMotion: 0,
   lastVector: null,
-  selectedNumber: 17,
+  selectedNumber: null,
   timer: null,
   transition: "none",
 };
@@ -159,7 +159,7 @@ function drawFortuneNumber(previousNumber = state.selectedNumber) {
 }
 
 function currentResultTitle() {
-  return t("resultTitle").replace(/\d+/, state.selectedNumber);
+  return t("resultTitle").replace("{number}", state.selectedNumber);
 }
 
 function setScreen(screen, direction = "forward") {
