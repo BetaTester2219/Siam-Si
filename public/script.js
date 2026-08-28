@@ -261,12 +261,15 @@ const state = {
   shakeScore: 0,
   lastMotion: 0,
   lastVector: null,
+  lastMotionMagnitude: null,
+  fallbackReady: false,
   motionSamples: 0,
   selectedNumber: null,
   latestDraw: null,
   backendHistory: null,
   drawRequestInFlight: false,
   timer: null,
+  fallbackTimer: null,
   transition: "none",
 };
 
@@ -1068,6 +1071,10 @@ function currentFortuneReading() {
 
 function setScreen(screen, direction = "forward") {
   clearTimer();
+  clearFallbackTimer();
+  if (state.screen === "shake" && screen !== "shake") {
+    stopMotionListeners();
+  }
   if (screen === "login" || screen === "register") {
     state.authSheet = false;
   }
@@ -1081,7 +1088,10 @@ function setScreen(screen, direction = "forward") {
     state.shakeState = "idle";
     state.shakeScore = 0;
     state.lastVector = null;
+    state.lastMotionMagnitude = null;
+    state.fallbackReady = false;
     state.motionSamples = 0;
+    startFallbackTimer();
   }
   render();
 }
@@ -1091,6 +1101,28 @@ function clearTimer() {
     clearTimeout(state.timer);
     state.timer = null;
   }
+}
+
+function clearFallbackTimer() {
+  if (state.fallbackTimer) {
+    clearTimeout(state.fallbackTimer);
+    state.fallbackTimer = null;
+  }
+}
+
+function startFallbackTimer() {
+  clearFallbackTimer();
+  state.fallbackTimer = setTimeout(() => {
+    if (state.screen === "shake" && state.shakeState !== "drawing" && state.shakeState !== "selected") {
+      state.fallbackReady = true;
+      render();
+    }
+  }, 6000);
+}
+
+function stopMotionListeners() {
+  window.removeEventListener("devicemotion", onDeviceMotion);
+  window.removeEventListener("deviceorientation", onDeviceOrientation);
 }
 
 function setLang(lang) {
@@ -1533,7 +1565,7 @@ function shakeView() {
           <h1>${copy.title}</h1>
           ${copy.body ? `<p>${copy.body}</p>` : ""}
         </div>
-        <div class="container-zone" aria-label="Fortune-stick container" data-action="demo-draw">
+        <div class="container-zone" aria-label="Fortune-stick container">
           <div class="fortune-container-wrap">
             <div class="motion-lines"><i></i><i></i><i></i><i></i></div>
             ${fortuneContainerSvg("shake")}
@@ -1543,7 +1575,7 @@ function shakeView() {
           <div class="phone-icon" aria-hidden="true"></div>
           <strong>${copy.cue}</strong>
           <p class="fallback-note">${state.motionEnabled ? "" : t("noMotion")}</p>
-          ${state.shakeState === "drawing" || state.shakeState === "selected" ? "" : `<button class="text-action" data-action="demo-draw">${t("drawHere")}</button>`}
+          ${state.fallbackReady && state.shakeState !== "drawing" && state.shakeState !== "selected" ? `<button class="text-action" data-action="demo-draw">${t("drawHere")}</button>` : ""}
         </div>
       </div>
     </section>
@@ -1886,6 +1918,8 @@ async function enableMotion() {
     const motion = window.DeviceMotionEvent;
     state.motionEnabled = false;
     state.lastVector = null;
+    state.lastMotionMagnitude = null;
+    state.fallbackReady = false;
     state.motionSamples = 0;
     if (!motion) {
       setScreen("shake");
@@ -1901,13 +1935,24 @@ async function enableMotion() {
     }
 
     window.removeEventListener("devicemotion", onDeviceMotion);
+    window.removeEventListener("deviceorientation", onDeviceOrientation);
     window.addEventListener("devicemotion", onDeviceMotion, { passive: true });
+    window.addEventListener("deviceorientation", onDeviceOrientation, { passive: true });
     state.motionEnabled = true;
     setScreen("shake");
   } catch {
     state.motionEnabled = false;
     setScreen("shake");
   }
+}
+
+function onDeviceOrientation(event) {
+  if (state.screen !== "shake" || state.shakeState === "selected" || state.shakeState === "drawing") return;
+  readShakeMotion({
+    x: safeMotionNumber(event.beta) / 9,
+    y: safeMotionNumber(event.gamma) / 9,
+    z: safeMotionNumber(event.alpha) / 18,
+  });
 }
 
 function safeMotionNumber(value) {
@@ -1931,30 +1976,38 @@ function onDeviceMotion(event) {
 
   const vector = readMotionVector(event);
   if (!vector) return;
+  readShakeMotion(vector);
+}
 
+function readShakeMotion(vector) {
   const now = Date.now();
   state.motionSamples += 1;
+  const magnitude = Math.sqrt(vector.x * vector.x + vector.y * vector.y + vector.z * vector.z);
 
   if (!state.lastVector) {
     state.lastVector = vector;
+    state.lastMotionMagnitude = magnitude;
     return;
   }
 
-  const force =
+  const axisDelta =
     Math.abs(vector.x - state.lastVector.x) +
     Math.abs(vector.y - state.lastVector.y) +
     Math.abs(vector.z - state.lastVector.z);
+  const magnitudeDelta = Math.abs(magnitude - (state.lastMotionMagnitude ?? magnitude));
+  const force = Math.max(axisDelta, magnitudeDelta * 2);
   state.lastVector = vector;
+  state.lastMotionMagnitude = magnitude;
 
-  if (force > 2.8 && now - state.lastMotion > 80) {
+  if (force > 1.2 && now - state.lastMotion > 70) {
     state.lastMotion = now;
-    state.shakeScore += Math.min(Math.max(force / 2, 1.2), 5.5);
+    state.shakeScore += Math.min(Math.max(force * 1.35, 1), 4.8);
     updateShakeState();
   }
 }
 
 function updateShakeState() {
-  const next = state.shakeScore > 7 ? "strong" : state.shakeScore > 2.5 ? "shaking" : "light";
+  const next = state.shakeScore > 4.5 ? "strong" : state.shakeScore > 1.5 ? "shaking" : "light";
   if (state.shakeState !== next) {
     state.shakeState = next;
     render();
@@ -1963,7 +2016,7 @@ function updateShakeState() {
   clearTimer();
   state.timer = setTimeout(() => {
     if (state.screen === "shake" && state.shakeState !== "selected" && state.shakeState !== "drawing") {
-      state.shakeScore = Math.max(0, state.shakeScore - 1.5);
+      state.shakeScore = Math.max(0, state.shakeScore - 0.9);
       if (state.shakeScore <= 0) {
         state.shakeState = "idle";
         render();
@@ -1971,14 +2024,16 @@ function updateShakeState() {
     }
   }, 820);
 
-  if (state.shakeScore >= 10) {
+  if (state.shakeScore >= 6) {
     selectFortune();
   }
 }
 
 async function selectFortune() {
   if (state.drawRequestInFlight) return;
+  clearFallbackTimer();
   state.drawRequestInFlight = true;
+  state.fallbackReady = false;
   state.shakeState = "drawing";
   render();
 
