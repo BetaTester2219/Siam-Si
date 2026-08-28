@@ -1091,10 +1091,14 @@ function setScreen(screen, direction = "forward") {
     state.shakeScore = 0;
     state.lastVector = null;
     state.lastMotionMagnitude = null;
+    state.lastMotion = 0;
     state.fallbackReady = false;
     state.motionSamples = 0;
-    state.shakeArmedAt = Date.now() + 1400;
+    state.shakeArmedAt = Date.now() + 1600;
     state.shakeHits = 0;
+    if (state.motionEnabled) {
+      startMotionListeners();
+    }
     startFallbackTimer();
   }
   render();
@@ -1126,6 +1130,11 @@ function startFallbackTimer() {
 
 function stopMotionListeners() {
   window.removeEventListener("devicemotion", onDeviceMotion);
+}
+
+function startMotionListeners() {
+  window.removeEventListener("devicemotion", onDeviceMotion);
+  window.addEventListener("devicemotion", onDeviceMotion, { passive: true });
 }
 
 function setLang(lang) {
@@ -1578,7 +1587,7 @@ function shakeView() {
           <div class="phone-icon" aria-hidden="true"></div>
           <strong>${copy.cue}</strong>
           <p class="fallback-note">${state.motionEnabled ? "" : t("noMotion")}</p>
-          ${state.fallbackReady && state.shakeState !== "drawing" && state.shakeState !== "selected" ? `<button class="text-action" data-action="demo-draw">${t("drawHere")}</button>` : ""}
+          ${state.fallbackReady && !state.motionEnabled && state.shakeState !== "drawing" && state.shakeState !== "selected" ? `<button class="text-action" data-action="demo-draw">${t("drawHere")}</button>` : ""}
         </div>
       </div>
     </section>
@@ -1934,7 +1943,7 @@ async function enableMotion() {
     const motionAllowed = await requestSensorPermission(window.DeviceMotionEvent);
 
     if (hasMotion && motionAllowed) {
-      window.addEventListener("devicemotion", onDeviceMotion, { passive: true });
+      startMotionListeners();
     }
 
     state.motionEnabled = hasMotion && motionAllowed;
@@ -1998,7 +2007,7 @@ function readShakeMotion(vector, options = {}) {
   state.lastVector = vector;
   state.lastMotionMagnitude = magnitude;
 
-  const threshold = options.threshold ?? 8.5;
+  const threshold = options.threshold ?? 9.2;
   const gain = options.gain ?? 0.8;
   const minSamples = options.minSamples ?? 6;
   if (now < state.shakeArmedAt || state.motionSamples < minSamples) return;
@@ -2018,24 +2027,42 @@ function updateShakeState() {
     render();
   }
 
-  clearTimer();
-  state.timer = setTimeout(() => {
-    if (state.screen === "shake" && state.shakeState !== "selected" && state.shakeState !== "drawing") {
-      state.shakeScore = Math.max(0, state.shakeScore - 1.2);
-      if (state.shakeScore <= 0) {
-        state.shakeState = "idle";
-        render();
-      }
-    }
-  }, 820);
+  scheduleShakeDecay();
 
-  if (state.shakeScore >= 12 && state.shakeHits >= 3) {
+  if (state.shakeScore >= 13 && state.shakeHits >= 3) {
     selectFortune();
   }
 }
 
+function scheduleShakeDecay() {
+  clearTimer();
+  state.timer = setTimeout(() => {
+    if (state.screen !== "shake" || state.shakeState === "selected" || state.shakeState === "drawing") return;
+
+    const idleTime = Date.now() - state.lastMotion;
+    if (idleTime > 700) {
+      state.shakeScore = Math.max(0, state.shakeScore - 2.4);
+      if (idleTime > 1200) {
+        state.shakeHits = 0;
+      }
+
+      const next =
+        state.shakeScore <= 0 ? "idle" : state.shakeScore > 8 ? "strong" : state.shakeScore > 3 ? "shaking" : "light";
+      if (state.shakeState !== next) {
+        state.shakeState = next;
+        render();
+      }
+    }
+
+    if (state.shakeScore > 0) {
+      scheduleShakeDecay();
+    }
+  }, 420);
+}
+
 async function selectFortune() {
   if (state.drawRequestInFlight) return;
+  clearTimer();
   clearFallbackTimer();
   state.drawRequestInFlight = true;
   state.fallbackReady = false;
