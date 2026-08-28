@@ -1196,7 +1196,6 @@ function accountStrip() {
   }
   return `
     <div class="account-strip">
-      <button class="text-mini" data-screen="login">${t("signIn")}</button>
       <button class="account-chip" data-screen="register">${t("register")}</button>
     </div>
   `;
@@ -1239,7 +1238,6 @@ function authSheet() {
         <p>${body}</p>
         <div class="button-stack compact">
           <button class="primary" data-screen="register">${t("register")}</button>
-          <button class="secondary" data-screen="login">${t("signIn")}</button>
           <button class="text-action" data-action="close-auth-sheet">${t("maybeLater")}</button>
         </div>
       </section>
@@ -1374,7 +1372,6 @@ function registerView() {
         <label class="check-row"><input name="terms" type="checkbox" /> <span>${t("acceptTerms")}</span></label>
         <button class="text-action inline" type="button" data-action="toggle-password">${state.showPassword ? t("hidePassword") : t("showPassword")}</button>
         <button class="primary" type="submit" ${state.authLoading ? "disabled" : ""}>${state.authLoading ? t("loadingFortune") : t("register")}</button>
-        <button class="text-action" type="button" data-screen="login">${t("hasAccount")}</button>
       </form>
     </section>
   `;
