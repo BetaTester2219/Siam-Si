@@ -1276,21 +1276,7 @@ function authSheet() {
       </div>
     `;
   }
-  if (!state.authSheet) return "";
-  const title = state.authReason === "session_expired" ? t("sessionExpiredTitle") : t("authGateTitle");
-  const body = state.authReason === "session_expired" ? t("sessionExpiredBody") : t("authGateBody");
-  return `
-    <div class="sheet-backdrop" data-action="close-auth-sheet">
-      <section class="bottom-sheet" role="dialog" aria-modal="true" aria-label="${title}" data-sheet>
-        <h2>${title}</h2>
-        <p>${body}</p>
-        <div class="button-stack compact">
-          <button class="primary" data-screen="register">${t("register")}</button>
-          <button class="text-action" data-action="close-auth-sheet">${t("maybeLater")}</button>
-        </div>
-      </section>
-    </div>
-  `;
+  return "";
 }
 
 function welcomeView() {
@@ -1712,10 +1698,7 @@ function closeAuthSheet() {
 
 async function openProtectedHistory() {
   if (!state.user) {
-    state.authRedirect = "history";
-    state.authReason = "";
-    state.authSheet = true;
-    render();
+    toast(t("emptyHistory"));
     return;
   }
   await syncFortuneHistory();
@@ -1724,10 +1707,7 @@ async function openProtectedHistory() {
 
 async function openProtectedProfile() {
   if (!state.user) {
-    state.authRedirect = "profile";
-    state.authReason = "";
-    state.authSheet = true;
-    render();
+    toast(t("accountReady"));
     return;
   }
   await syncFortuneHistory();

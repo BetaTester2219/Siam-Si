@@ -20,7 +20,7 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
     <html lang="th">
       <body>
         {children}
-        <Script src="/script.js?v=20260827-backend-foundation" strategy="afterInteractive" />
+        <Script src="/script.js?v=20260828-demo-draw-v2" strategy="afterInteractive" />
       </body>
     </html>
   );
