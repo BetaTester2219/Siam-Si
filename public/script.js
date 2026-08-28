@@ -264,6 +264,8 @@ const state = {
   lastMotionMagnitude: null,
   fallbackReady: false,
   motionSamples: 0,
+  shakeArmedAt: 0,
+  shakeHits: 0,
   selectedNumber: null,
   latestDraw: null,
   backendHistory: null,
@@ -1092,6 +1094,8 @@ function setScreen(screen, direction = "forward") {
     state.lastMotionMagnitude = null;
     state.fallbackReady = false;
     state.motionSamples = 0;
+    state.shakeArmedAt = Date.now() + 900;
+    state.shakeHits = 0;
     startFallbackTimer();
   }
   render();
@@ -1998,11 +2002,14 @@ function startAccelerometer() {
 
 function onDeviceOrientation(event) {
   if (state.screen !== "shake" || state.shakeState === "selected" || state.shakeState === "drawing") return;
-  readShakeMotion({
-    x: safeMotionNumber(event.beta) / 9,
-    y: safeMotionNumber(event.gamma) / 9,
-    z: safeMotionNumber(event.alpha) / 18,
-  });
+  readShakeMotion(
+    {
+      x: safeMotionNumber(event.beta) / 9,
+      y: safeMotionNumber(event.gamma) / 9,
+      z: 0,
+    },
+    { threshold: 3.6, gain: 0.9, minSamples: 8 }
+  );
 }
 
 function safeMotionNumber(value) {
@@ -2026,10 +2033,10 @@ function onDeviceMotion(event) {
 
   const vector = readMotionVector(event);
   if (!vector) return;
-  readShakeMotion(vector);
+  readShakeMotion(vector, { threshold: 2.2, gain: 1.15, minSamples: 4 });
 }
 
-function readShakeMotion(vector) {
+function readShakeMotion(vector, options = {}) {
   const now = Date.now();
   state.motionSamples += 1;
   const magnitude = Math.sqrt(vector.x * vector.x + vector.y * vector.y + vector.z * vector.z);
@@ -2049,9 +2056,15 @@ function readShakeMotion(vector) {
   state.lastVector = vector;
   state.lastMotionMagnitude = magnitude;
 
-  if (force > 1.2 && now - state.lastMotion > 70) {
+  const threshold = options.threshold ?? 2.2;
+  const gain = options.gain ?? 1;
+  const minSamples = options.minSamples ?? 4;
+  if (now < state.shakeArmedAt || state.motionSamples < minSamples) return;
+
+  if (force > threshold && now - state.lastMotion > 90) {
+    state.shakeHits = now - state.lastMotion < 900 ? state.shakeHits + 1 : 1;
     state.lastMotion = now;
-    state.shakeScore += Math.min(Math.max(force * 1.35, 1), 4.8);
+    state.shakeScore += Math.min(Math.max(force * gain, 1), 3.8);
     updateShakeState();
   }
 }
@@ -2074,7 +2087,7 @@ function updateShakeState() {
     }
   }, 820);
 
-  if (state.shakeScore >= 6) {
+  if (state.shakeScore >= 7 && state.shakeHits >= 2) {
     selectFortune();
   }
 }
