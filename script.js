@@ -270,7 +270,6 @@ const state = {
   latestDraw: null,
   backendHistory: null,
   drawRequestInFlight: false,
-  accelerometer: null,
   timer: null,
   fallbackTimer: null,
   transition: "none",
@@ -1094,7 +1093,7 @@ function setScreen(screen, direction = "forward") {
     state.lastMotionMagnitude = null;
     state.fallbackReady = false;
     state.motionSamples = 0;
-    state.shakeArmedAt = Date.now() + 900;
+    state.shakeArmedAt = Date.now() + 1400;
     state.shakeHits = 0;
     startFallbackTimer();
   }
@@ -1127,15 +1126,6 @@ function startFallbackTimer() {
 
 function stopMotionListeners() {
   window.removeEventListener("devicemotion", onDeviceMotion);
-  window.removeEventListener("deviceorientation", onDeviceOrientation);
-  if (state.accelerometer) {
-    try {
-      state.accelerometer.stop();
-    } catch {
-      // Some browsers expose the API but throw when stopping an inactive sensor.
-    }
-    state.accelerometer = null;
-  }
 }
 
 function setLang(lang) {
@@ -1936,26 +1926,18 @@ async function enableMotion() {
     stopMotionListeners();
 
     const hasMotion = "DeviceMotionEvent" in window;
-    const hasOrientation = "DeviceOrientationEvent" in window;
-    const hasAccelerometer = "Accelerometer" in window;
-    if (!hasMotion && !hasOrientation && !hasAccelerometer) {
+    if (!hasMotion) {
       setScreen("shake");
       return;
     }
 
-    const motionPermission = requestSensorPermission(window.DeviceMotionEvent);
-    const orientationPermission = requestSensorPermission(window.DeviceOrientationEvent);
-    const [motionAllowed, orientationAllowed] = await Promise.all([motionPermission, orientationPermission]);
-    const accelerometerStarted = startAccelerometer();
+    const motionAllowed = await requestSensorPermission(window.DeviceMotionEvent);
 
     if (hasMotion && motionAllowed) {
       window.addEventListener("devicemotion", onDeviceMotion, { passive: true });
     }
-    if (hasOrientation && orientationAllowed) {
-      window.addEventListener("deviceorientation", onDeviceOrientation, { passive: true });
-    }
 
-    state.motionEnabled = (hasMotion && motionAllowed) || (hasOrientation && orientationAllowed) || accelerometerStarted;
+    state.motionEnabled = hasMotion && motionAllowed;
     setScreen("shake");
   } catch {
     state.motionEnabled = false;
@@ -1973,58 +1955,18 @@ async function requestSensorPermission(sensorEvent) {
   }
 }
 
-function startAccelerometer() {
-  const AccelerometerApi = window.Accelerometer;
-  if (!AccelerometerApi) return false;
-
-  try {
-    const sensor = new AccelerometerApi({ frequency: 30 });
-    sensor.addEventListener("reading", () => {
-      if (state.screen !== "shake" || state.shakeState === "selected" || state.shakeState === "drawing") return;
-      readShakeMotion({
-        x: safeMotionNumber(sensor.x),
-        y: safeMotionNumber(sensor.y),
-        z: safeMotionNumber(sensor.z),
-      });
-    });
-    sensor.addEventListener("error", () => {
-      if (state.accelerometer === sensor) {
-        state.accelerometer = null;
-      }
-    });
-    sensor.start();
-    state.accelerometer = sensor;
-    return true;
-  } catch {
-    return false;
-  }
-}
-
-function onDeviceOrientation(event) {
-  if (state.screen !== "shake" || state.shakeState === "selected" || state.shakeState === "drawing") return;
-  readShakeMotion(
-    {
-      x: safeMotionNumber(event.beta) / 9,
-      y: safeMotionNumber(event.gamma) / 9,
-      z: 0,
-    },
-    { threshold: 3.6, gain: 0.9, minSamples: 8 }
-  );
-}
-
 function safeMotionNumber(value) {
   return Number.isFinite(value) ? value : 0;
 }
 
 function readMotionVector(event) {
-  const acceleration = event.accelerationIncludingGravity || event.acceleration || {};
-  const rotation = event.rotationRate || {};
-  if (!event.accelerationIncludingGravity && !event.acceleration && !event.rotationRate) return null;
+  const acceleration = event.acceleration || event.accelerationIncludingGravity || {};
+  if (!event.acceleration && !event.accelerationIncludingGravity) return null;
 
   return {
-    x: safeMotionNumber(acceleration.x) + safeMotionNumber(rotation.beta) / 14,
-    y: safeMotionNumber(acceleration.y) + safeMotionNumber(rotation.gamma) / 14,
-    z: safeMotionNumber(acceleration.z) + safeMotionNumber(rotation.alpha) / 18,
+    x: safeMotionNumber(acceleration.x),
+    y: safeMotionNumber(acceleration.y),
+    z: safeMotionNumber(acceleration.z),
   };
 }
 
@@ -2033,7 +1975,7 @@ function onDeviceMotion(event) {
 
   const vector = readMotionVector(event);
   if (!vector) return;
-  readShakeMotion(vector, { threshold: 2.2, gain: 1.15, minSamples: 4 });
+  readShakeMotion(vector);
 }
 
 function readShakeMotion(vector, options = {}) {
@@ -2056,21 +1998,21 @@ function readShakeMotion(vector, options = {}) {
   state.lastVector = vector;
   state.lastMotionMagnitude = magnitude;
 
-  const threshold = options.threshold ?? 2.2;
-  const gain = options.gain ?? 1;
-  const minSamples = options.minSamples ?? 4;
+  const threshold = options.threshold ?? 8.5;
+  const gain = options.gain ?? 0.8;
+  const minSamples = options.minSamples ?? 6;
   if (now < state.shakeArmedAt || state.motionSamples < minSamples) return;
 
-  if (force > threshold && now - state.lastMotion > 90) {
-    state.shakeHits = now - state.lastMotion < 900 ? state.shakeHits + 1 : 1;
+  if (force > threshold && now - state.lastMotion > 120) {
+    state.shakeHits = now - state.lastMotion < 1200 ? state.shakeHits + 1 : 1;
     state.lastMotion = now;
-    state.shakeScore += Math.min(Math.max(force * gain, 1), 3.8);
+    state.shakeScore += Math.min(Math.max(force * gain, 2), 4.2);
     updateShakeState();
   }
 }
 
 function updateShakeState() {
-  const next = state.shakeScore > 4.5 ? "strong" : state.shakeScore > 1.5 ? "shaking" : "light";
+  const next = state.shakeScore > 8 ? "strong" : state.shakeScore > 3 ? "shaking" : "light";
   if (state.shakeState !== next) {
     state.shakeState = next;
     render();
@@ -2079,7 +2021,7 @@ function updateShakeState() {
   clearTimer();
   state.timer = setTimeout(() => {
     if (state.screen === "shake" && state.shakeState !== "selected" && state.shakeState !== "drawing") {
-      state.shakeScore = Math.max(0, state.shakeScore - 0.9);
+      state.shakeScore = Math.max(0, state.shakeScore - 1.2);
       if (state.shakeScore <= 0) {
         state.shakeState = "idle";
         render();
@@ -2087,7 +2029,7 @@ function updateShakeState() {
     }
   }, 820);
 
-  if (state.shakeScore >= 7 && state.shakeHits >= 2) {
+  if (state.shakeScore >= 12 && state.shakeHits >= 3) {
     selectFortune();
   }
 }
