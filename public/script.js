@@ -268,6 +268,7 @@ const state = {
   latestDraw: null,
   backendHistory: null,
   drawRequestInFlight: false,
+  accelerometer: null,
   timer: null,
   fallbackTimer: null,
   transition: "none",
@@ -1123,6 +1124,14 @@ function startFallbackTimer() {
 function stopMotionListeners() {
   window.removeEventListener("devicemotion", onDeviceMotion);
   window.removeEventListener("deviceorientation", onDeviceOrientation);
+  if (state.accelerometer) {
+    try {
+      state.accelerometer.stop();
+    } catch {
+      // Some browsers expose the API but throw when stopping an inactive sensor.
+    }
+    state.accelerometer = null;
+  }
 }
 
 function setLang(lang) {
@@ -1915,34 +1924,75 @@ function saveCurrentFortune() {
 
 async function enableMotion() {
   try {
-    const motion = window.DeviceMotionEvent;
     state.motionEnabled = false;
     state.lastVector = null;
     state.lastMotionMagnitude = null;
     state.fallbackReady = false;
     state.motionSamples = 0;
-    if (!motion) {
+    stopMotionListeners();
+
+    const hasMotion = "DeviceMotionEvent" in window;
+    const hasOrientation = "DeviceOrientationEvent" in window;
+    const hasAccelerometer = "Accelerometer" in window;
+    if (!hasMotion && !hasOrientation && !hasAccelerometer) {
       setScreen("shake");
       return;
     }
 
-    if (typeof motion.requestPermission === "function") {
-      const response = await motion.requestPermission();
-      if (response !== "granted") {
-        setScreen("shake");
-        return;
-      }
+    const motionPermission = requestSensorPermission(window.DeviceMotionEvent);
+    const orientationPermission = requestSensorPermission(window.DeviceOrientationEvent);
+    const [motionAllowed, orientationAllowed] = await Promise.all([motionPermission, orientationPermission]);
+    const accelerometerStarted = startAccelerometer();
+
+    if (hasMotion && motionAllowed) {
+      window.addEventListener("devicemotion", onDeviceMotion, { passive: true });
+    }
+    if (hasOrientation && orientationAllowed) {
+      window.addEventListener("deviceorientation", onDeviceOrientation, { passive: true });
     }
 
-    window.removeEventListener("devicemotion", onDeviceMotion);
-    window.removeEventListener("deviceorientation", onDeviceOrientation);
-    window.addEventListener("devicemotion", onDeviceMotion, { passive: true });
-    window.addEventListener("deviceorientation", onDeviceOrientation, { passive: true });
-    state.motionEnabled = true;
+    state.motionEnabled = (hasMotion && motionAllowed) || (hasOrientation && orientationAllowed) || accelerometerStarted;
     setScreen("shake");
   } catch {
     state.motionEnabled = false;
     setScreen("shake");
+  }
+}
+
+async function requestSensorPermission(sensorEvent) {
+  if (!sensorEvent) return false;
+  if (typeof sensorEvent.requestPermission !== "function") return true;
+  try {
+    return (await sensorEvent.requestPermission()) === "granted";
+  } catch {
+    return false;
+  }
+}
+
+function startAccelerometer() {
+  const AccelerometerApi = window.Accelerometer;
+  if (!AccelerometerApi) return false;
+
+  try {
+    const sensor = new AccelerometerApi({ frequency: 30 });
+    sensor.addEventListener("reading", () => {
+      if (state.screen !== "shake" || state.shakeState === "selected" || state.shakeState === "drawing") return;
+      readShakeMotion({
+        x: safeMotionNumber(sensor.x),
+        y: safeMotionNumber(sensor.y),
+        z: safeMotionNumber(sensor.z),
+      });
+    });
+    sensor.addEventListener("error", () => {
+      if (state.accelerometer === sensor) {
+        state.accelerometer = null;
+      }
+    });
+    sensor.start();
+    state.accelerometer = sensor;
+    return true;
+  } catch {
+    return false;
   }
 }
 
