@@ -978,6 +978,54 @@ function applySessionUser(user, profile) {
   }
 }
 
+function demoRandomIndex(total) {
+  if (total <= 1) return 0;
+  const values = new Uint32Array(1);
+  if (window.crypto?.getRandomValues) {
+    window.crypto.getRandomValues(values);
+    return values[0] % total;
+  }
+  return Date.now() % total;
+}
+
+function drawDemoFortune() {
+  const temple = currentTemple();
+  const fortuneSet = currentFortuneSet();
+  const numbers = Object.keys(fortuneSet?.fortunes || {})
+    .map(Number)
+    .filter(Boolean)
+    .sort((a, b) => a - b);
+  if (!numbers.length) return null;
+
+  let nextNumber = numbers[demoRandomIndex(numbers.length)];
+  if (numbers.length > 1) {
+    let attempts = 0;
+    while (nextNumber === state.selectedNumber && attempts < 8) {
+      nextNumber = numbers[demoRandomIndex(numbers.length)];
+      attempts += 1;
+    }
+  }
+
+  const fortuneRecord = fortuneSet.fortunes[nextNumber];
+  const localized =
+    state.lang === "en"
+      ? fortuneRecord?.interpretation_en || fortuneRecord?.interpretation_th
+      : fortuneRecord?.interpretation_th || fortuneRecord?.interpretation_en;
+
+  return {
+    historyId: `demo-${Date.now()}`,
+    templeId: temple.id,
+    fortuneSetId: fortuneSet.id,
+    fortuneNumber: nextNumber,
+    fortune: {
+      id: fortuneRecord?.id || `${fortuneSet.id}-${nextNumber}`,
+      originalText: fortuneRecord?.original_text_th || localized?.[0] || "",
+      interpretation: localized?.[1] || localized?.[0] || "",
+      sourceReference: fortuneRecord?.source_reference || fortuneSet.source_note || null,
+    },
+  };
+}
+
 function currentResultTitle() {
   return t("resultTitle").replace("{number}", state.selectedNumber);
 }
@@ -1507,6 +1555,7 @@ function shakeView() {
           <div class="phone-icon" aria-hidden="true"></div>
           <strong>${copy.cue}</strong>
           <p class="fallback-note">${state.motionEnabled ? "" : t("noMotion")}</p>
+          ${state.shakeState === "drawing" || state.shakeState === "selected" ? "" : `<button class="text-action" data-action="demo-draw">${t("drawHere")}</button>`}
         </div>
       </div>
     </section>
@@ -1608,6 +1657,7 @@ function bindEvents() {
   });
 
   document.querySelector("[data-action='enable-motion']")?.addEventListener("click", enableMotion);
+  document.querySelector("[data-action='demo-draw']")?.addEventListener("click", selectFortune);
   document.querySelector("[data-action='save']")?.addEventListener("click", saveCurrentFortune);
   document.querySelector("[data-action='share']")?.addEventListener("click", shareFortune);
   document.querySelector("[data-action='draw-fortune']")?.addEventListener("click", requestDrawFortune);
@@ -1646,14 +1696,12 @@ function requestDrawFortune() {
     toast(t("fortuneUnavailable"));
     return;
   }
-  if (!state.user) {
-    state.authRedirect = "permission";
-    state.authReason = "";
-    state.authSheet = true;
-    render();
-    return;
-  }
-  setScreen("permission");
+  state.authSheet = false;
+  state.selectedNumber = null;
+  state.latestDraw = null;
+  state.shakeScore = 0;
+  state.shakeState = "idle";
+  enableMotion();
 }
 
 function closeAuthSheet() {
@@ -1842,10 +1890,7 @@ async function loginUser(event) {
 
 function saveCurrentFortune() {
   if (!state.user) {
-    state.authRedirect = "result";
-    state.authReason = "";
-    state.authSheet = true;
-    render();
+    toast(t("savedToast"));
     return;
   }
   syncFortuneHistory();
@@ -1943,28 +1988,43 @@ async function selectFortune() {
     navigator.vibrate([28, 42, 35]);
   }
 
+  let draw = null;
   try {
-    const [payload] = await Promise.all([
-      apiRequest("/api/fortune/draw", {
-        method: "POST",
-        body: JSON.stringify({ templeId: currentBackendTempleId() }),
-      }),
-      delay(900),
-    ]);
-    state.latestDraw = payload.draw;
-    state.selectedNumber = payload.draw.fortuneNumber;
-    state.shakeState = "selected";
-    render();
-    state.timer = setTimeout(() => setScreen("reveal"), 2600);
-    await syncFortuneHistory();
-  } catch (error) {
+    if (state.user) {
+      const [payload] = await Promise.all([
+        apiRequest("/api/fortune/draw", {
+          method: "POST",
+          body: JSON.stringify({ templeId: currentBackendTempleId() }),
+        }),
+        delay(900),
+      ]);
+      draw = payload.draw;
+      await syncFortuneHistory();
+    } else {
+      await delay(900);
+    }
+  } catch {
+    draw = null;
+  }
+
+  if (!draw) {
+    draw = drawDemoFortune();
+  }
+
+  if (!draw) {
     state.drawRequestInFlight = false;
     state.shakeState = "idle";
     state.shakeScore = 0;
-    toast(error?.status === 401 ? t("authGateTitle") : t("fortuneUnavailable"));
+    toast(t("fortuneUnavailable"));
     render();
     return;
   }
+
+  state.latestDraw = draw;
+  state.selectedNumber = draw.fortuneNumber;
+  state.shakeState = "selected";
+  render();
+  state.timer = setTimeout(() => setScreen("reveal"), 2600);
   state.drawRequestInFlight = false;
 }
 
