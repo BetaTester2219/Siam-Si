@@ -261,6 +261,7 @@ const state = {
   shakeScore: 0,
   lastMotion: 0,
   lastVector: null,
+  motionSamples: 0,
   selectedNumber: null,
   latestDraw: null,
   backendHistory: null,
@@ -1080,6 +1081,7 @@ function setScreen(screen, direction = "forward") {
     state.shakeState = "idle";
     state.shakeScore = 0;
     state.lastVector = null;
+    state.motionSamples = 0;
   }
   render();
 }
@@ -1531,7 +1533,7 @@ function shakeView() {
           <h1>${copy.title}</h1>
           ${copy.body ? `<p>${copy.body}</p>` : ""}
         </div>
-        <div class="container-zone" aria-label="Fortune-stick container">
+        <div class="container-zone" aria-label="Fortune-stick container" data-action="demo-draw">
           <div class="fortune-container-wrap">
             <div class="motion-lines"><i></i><i></i><i></i><i></i></div>
             ${fortuneContainerSvg("shake")}
@@ -1643,7 +1645,9 @@ function bindEvents() {
   });
 
   document.querySelector("[data-action='enable-motion']")?.addEventListener("click", enableMotion);
-  document.querySelector("[data-action='demo-draw']")?.addEventListener("click", selectFortune);
+  document.querySelectorAll("[data-action='demo-draw']").forEach((button) => {
+    button.addEventListener("click", selectFortune);
+  });
   document.querySelector("[data-action='save']")?.addEventListener("click", saveCurrentFortune);
   document.querySelector("[data-action='share']")?.addEventListener("click", shareFortune);
   document.querySelector("[data-action='draw-fortune']")?.addEventListener("click", requestDrawFortune);
@@ -1880,8 +1884,10 @@ function saveCurrentFortune() {
 async function enableMotion() {
   try {
     const motion = window.DeviceMotionEvent;
+    state.motionEnabled = false;
+    state.lastVector = null;
+    state.motionSamples = 0;
     if (!motion) {
-      state.motionEnabled = false;
       setScreen("shake");
       return;
     }
@@ -1889,12 +1895,12 @@ async function enableMotion() {
     if (typeof motion.requestPermission === "function") {
       const response = await motion.requestPermission();
       if (response !== "granted") {
-        state.motionEnabled = false;
         setScreen("shake");
         return;
       }
     }
 
+    window.removeEventListener("devicemotion", onDeviceMotion);
     window.addEventListener("devicemotion", onDeviceMotion, { passive: true });
     state.motionEnabled = true;
     setScreen("shake");
@@ -1904,18 +1910,30 @@ async function enableMotion() {
   }
 }
 
+function safeMotionNumber(value) {
+  return Number.isFinite(value) ? value : 0;
+}
+
+function readMotionVector(event) {
+  const acceleration = event.accelerationIncludingGravity || event.acceleration || {};
+  const rotation = event.rotationRate || {};
+  if (!event.accelerationIncludingGravity && !event.acceleration && !event.rotationRate) return null;
+
+  return {
+    x: safeMotionNumber(acceleration.x) + safeMotionNumber(rotation.beta) / 14,
+    y: safeMotionNumber(acceleration.y) + safeMotionNumber(rotation.gamma) / 14,
+    z: safeMotionNumber(acceleration.z) + safeMotionNumber(rotation.alpha) / 18,
+  };
+}
+
 function onDeviceMotion(event) {
   if (state.screen !== "shake" || state.shakeState === "selected" || state.shakeState === "drawing") return;
 
-  const acceleration = event.accelerationIncludingGravity;
-  if (!acceleration) return;
+  const vector = readMotionVector(event);
+  if (!vector) return;
 
   const now = Date.now();
-  const vector = {
-    x: acceleration.x || 0,
-    y: acceleration.y || 0,
-    z: acceleration.z || 0,
-  };
+  state.motionSamples += 1;
 
   if (!state.lastVector) {
     state.lastVector = vector;
@@ -1928,15 +1946,15 @@ function onDeviceMotion(event) {
     Math.abs(vector.z - state.lastVector.z);
   state.lastVector = vector;
 
-  if (force > 11 && now - state.lastMotion > 120) {
+  if (force > 2.8 && now - state.lastMotion > 80) {
     state.lastMotion = now;
-    state.shakeScore += Math.min(force / 6, 3.4);
+    state.shakeScore += Math.min(Math.max(force / 2, 1.2), 5.5);
     updateShakeState();
   }
 }
 
 function updateShakeState() {
-  const next = state.shakeScore > 10 ? "strong" : state.shakeScore > 4 ? "shaking" : "light";
+  const next = state.shakeScore > 7 ? "strong" : state.shakeScore > 2.5 ? "shaking" : "light";
   if (state.shakeState !== next) {
     state.shakeState = next;
     render();
@@ -1945,7 +1963,7 @@ function updateShakeState() {
   clearTimer();
   state.timer = setTimeout(() => {
     if (state.screen === "shake" && state.shakeState !== "selected" && state.shakeState !== "drawing") {
-      state.shakeScore = Math.max(0, state.shakeScore - 2.5);
+      state.shakeScore = Math.max(0, state.shakeScore - 1.5);
       if (state.shakeScore <= 0) {
         state.shakeState = "idle";
         render();
@@ -1953,7 +1971,7 @@ function updateShakeState() {
     }
   }, 820);
 
-  if (state.shakeScore >= 16) {
+  if (state.shakeScore >= 10) {
     selectFortune();
   }
 }
